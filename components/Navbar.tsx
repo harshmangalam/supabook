@@ -12,6 +12,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { BsPeople } from "react-icons/bs";
 import NotificationMenu from "./NotificationMenu";
 import ProfileMenu from "./ProfileMenu";
+import ThemeMode from "./ThemeMode";
 
 export default function Navbar() {
   return (
@@ -20,6 +21,8 @@ export default function Navbar() {
       justify={"space-between"}
       py={4}
       borderBottomWidth="thin"
+      h={16}
+      align="center"
       px={4}
     >
       {/* logo  */}
@@ -34,14 +37,21 @@ export default function Navbar() {
       <HStack spacing={4} flexGrow={1} justify="center">
         {menus.map((menu) => (
           <Link href={menu.href} passHref>
-            <Button variant={"outline"} leftIcon={menu.icon} as="a">
+            <Button
+              h={12}
+              variant={"ghost"}
+              rounded="lg"
+              leftIcon={menu.icon}
+              as="a"
+            >
               {menu.name}
             </Button>
           </Link>
         ))}
       </HStack>
 
-      <HStack>
+      <HStack spacing={4}>
+        <ThemeMode />
         <NotificationMenu />
         <ProfileMenu />
       </HStack>
