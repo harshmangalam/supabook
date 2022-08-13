@@ -16,6 +16,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { supabase } from "../../utils/supabaseClient";
 
 const schema = yup
   .object({
@@ -31,8 +32,18 @@ export default function LoginWithEmailRoute() {
     formState: { errors, isSubmitting },
   } = useForm({ resolver: yupResolver(schema) });
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const onSubmit = async ({ email, password }) => {
+    try {
+      const { user, error } = await supabase.auth.signIn({
+        email,
+        password,
+      });
+
+      console.log(user);
+      console.log(error);
+    } catch (error) {
+      console.log(error);
+    }
   };
   return (
     <Flex
