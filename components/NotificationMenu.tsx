@@ -19,6 +19,7 @@ export default function NotificationMenu() {
     <Popover>
       <PopoverTrigger>
         <IconButton
+          rounded={"full"}
           aria-label="Notifications"
           icon={<RiNotification2Line size={24} />}
         />
@@ -30,7 +31,9 @@ export default function NotificationMenu() {
         <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
         <PopoverFooter>
           <Link href={"/notifications"} passHref>
-            <Button w="full" variant={"link"}>See all</Button>
+            <Button w="full" variant={"link"}>
+              See all
+            </Button>
           </Link>
         </PopoverFooter>
       </PopoverContent>
