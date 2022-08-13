@@ -1,7 +1,6 @@
 import {
   Avatar,
   Box,
-  Button,
   Flex,
   HStack,
   IconButton,
@@ -14,7 +13,13 @@ import ProfileMenu from "./ProfileMenu";
 
 export default function Navbar() {
   return (
-    <Flex as="nav" justify={"space-between"} py={4} borderBottomWidth="thin">
+    <Flex
+      as="nav"
+      justify={"space-between"}
+      py={4}
+      borderBottomWidth="thin"
+      px={4}
+    >
       {/* logo  */}
       <Avatar
         size={"md"}
