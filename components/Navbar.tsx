@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsPeople } from "react-icons/bs";
+import ProfileMenu from "./ProfileMenu";
 
 export default function Navbar() {
   return (
@@ -39,7 +40,9 @@ export default function Navbar() {
         ))}
       </HStack>
 
-      <HStack></HStack>
+      <HStack>
+        <ProfileMenu />
+      </HStack>
     </Flex>
   );
 }
