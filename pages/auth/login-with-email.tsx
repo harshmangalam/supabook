@@ -10,10 +10,20 @@ import {
   Text,
   useColorModeValue,
   Container,
+  FormErrorMessage,
 } from "@chakra-ui/react";
 import Link from "next/link";
-
+import { useForm } from "react-hook-form";
 export default function LoginWithEmailRoute() {
+  const {
+    handleSubmit,
+    register,
+    formState: { errors, isSubmitting },
+  } = useForm();
+
+  console.log(errors.email);
+
+  const onSubmit = () => {};
   return (
     <Flex
       minH={"100vh"}
@@ -29,23 +39,42 @@ export default function LoginWithEmailRoute() {
               Login With Email
             </Text>
           </Stack>
+
           <Box
             rounded={"lg"}
             bg={useColorModeValue("white", "gray.700")}
             boxShadow={"lg"}
             p={8}
           >
-            <Stack as="form" onSubmit={() => {}} spacing={4}>
-              <FormControl id="email">
+            <Stack as="form" onSubmit={handleSubmit(onSubmit)} spacing={4}>
+              <FormControl id="email" isInvalid={errors.email}>
                 <FormLabel>Email address</FormLabel>
-                <Input type="email" />
+                <Input
+                  type="email"
+                  {...register("email", {
+                    required: "Email must be required",
+                  })}
+                />
+                {errors?.email && (
+                  <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+                )}
               </FormControl>
-              <FormControl id="password">
+              <FormControl id="password" isInvalid={errors.password}>
                 <FormLabel>Password</FormLabel>
-                <Input type="password" />
+                <Input
+                  type="password"
+                  {...register("password", {
+                    required: "Password must be required",
+                  })}
+                />
+                {errors?.password && (
+                  <FormErrorMessage>{errors.password.message}</FormErrorMessage>
+                )}
               </FormControl>
 
-              <Button colorScheme="green">Sign in</Button>
+              <Button type="submit" colorScheme="green">
+                Sign in
+              </Button>
             </Stack>
             <Link href={"/auth"} passHref>
               <Button as="a" colorScheme="twitter" size="sm" mt={3} w="full">
