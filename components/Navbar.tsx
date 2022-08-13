@@ -13,19 +13,29 @@ import { BsPeople } from "react-icons/bs";
 
 export default function Navbar() {
   return (
-    <Flex as="nav" justify={"space-between"}>
+    <Flex as="nav" justify={"space-between"} py={4} borderBottomWidth="thin">
       {/* logo  */}
       <Avatar
-        width={40}
-        height={40}
+        size={"md"}
+        background="transparent"
         src="https://marketplace-assets.digitalocean.com/logos/supabase-supabasepostgres-18-04.svg"
       />
 
       {/* menu links  */}
 
-      <HStack spacing={2} flexGrow={1} justify="center">
+      <HStack spacing={4} flexGrow={1} justify="center">
         {menus.map((menu) => (
-          <Button leftIcon={menu.icon}>{menu.name}</Button>
+          <Box>
+            <Link href={menu.href} passHref>
+              <Tooltip label={menu.name}>
+                <IconButton
+                  size={"lg"}
+                  icon={menu.icon}
+                  arial-label={menu.name}
+                />
+              </Tooltip>
+            </Link>
+          </Box>
         ))}
       </HStack>
 
@@ -36,12 +46,12 @@ export default function Navbar() {
 
 const menus = [
   {
-    icon: <AiOutlineHome size={24} />,
+    icon: <AiOutlineHome size={32} />,
     name: "Home",
     href: "/",
   },
   {
-    icon: <BsPeople size={24} />,
+    icon: <BsPeople size={32} />,
     name: "Friends",
     href: "/friends",
   },
