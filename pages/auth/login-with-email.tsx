@@ -12,6 +12,7 @@ import {
   Container,
 } from "@chakra-ui/react";
 import Link from "next/link";
+
 export default function LoginWithEmailRoute() {
   return (
     <Flex
@@ -34,7 +35,7 @@ export default function LoginWithEmailRoute() {
             boxShadow={"lg"}
             p={8}
           >
-            <Stack spacing={4}>
+            <Stack as="form" onSubmit={() => {}} spacing={4}>
               <FormControl id="email">
                 <FormLabel>Email address</FormLabel>
                 <Input type="email" />
