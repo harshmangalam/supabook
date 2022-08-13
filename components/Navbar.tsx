@@ -10,6 +10,7 @@ import {
 import Link from "next/link";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsPeople } from "react-icons/bs";
+import NotificationMenu from "./NotificationMenu";
 import ProfileMenu from "./ProfileMenu";
 
 export default function Navbar() {
@@ -41,6 +42,7 @@ export default function Navbar() {
       </HStack>
 
       <HStack>
+        <NotificationMenu />
         <ProfileMenu />
       </HStack>
     </Flex>
