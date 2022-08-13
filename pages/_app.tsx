@@ -1,14 +1,15 @@
-import { ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
+import Navbar from "../components/Navbar";
 import { theme } from "../theme";
 
-function MyApp({ Component, pageProps }: AppProps) {
-  const getLayout = Component.getLayout || ((page) => page);
-  return getLayout(
+export default function App({ Component, pageProps }: AppProps) {
+  return (
     <ChakraProvider theme={theme}>
-      <Component {...pageProps} />
+      <Box>
+        <Navbar />
+        <Component {...pageProps} />
+      </Box>
     </ChakraProvider>
   );
 }
-
-export default MyApp;
