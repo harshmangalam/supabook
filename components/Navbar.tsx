@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Button,
   Flex,
   HStack,
   IconButton,
@@ -31,17 +32,11 @@ export default function Navbar() {
 
       <HStack spacing={4} flexGrow={1} justify="center">
         {menus.map((menu) => (
-          <Box>
-            <Link href={menu.href} passHref>
-              <Tooltip label={menu.name}>
-                <IconButton
-                  size={"lg"}
-                  icon={menu.icon}
-                  arial-label={menu.name}
-                />
-              </Tooltip>
-            </Link>
-          </Box>
+          <Link href={menu.href} passHref>
+            <Button variant={"outline"} leftIcon={menu.icon} as="a">
+              {menu.name}
+            </Button>
+          </Link>
         ))}
       </HStack>
 
@@ -54,12 +49,12 @@ export default function Navbar() {
 
 const menus = [
   {
-    icon: <AiOutlineHome size={32} />,
+    icon: <AiOutlineHome size={24} />,
     name: "Home",
     href: "/",
   },
   {
-    icon: <BsPeople size={32} />,
+    icon: <BsPeople size={24} />,
     name: "Friends",
     href: "/friends",
   },
