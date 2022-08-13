@@ -14,16 +14,26 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
+import { yupResolver } from "@hookform/resolvers/yup";
+import * as yup from "yup";
+
+const schema = yup
+  .object({
+    email: yup.string().required().email(),
+    password: yup.string().required().min(6),
+  })
+  .required();
+
 export default function LoginWithEmailRoute() {
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm();
+  } = useForm({ resolver: yupResolver(schema) });
 
-  console.log(errors.email);
-
-  const onSubmit = () => {};
+  const onSubmit = (data) => {
+    console.log(data);
+  };
   return (
     <Flex
       minH={"100vh"}
@@ -49,30 +59,24 @@ export default function LoginWithEmailRoute() {
             <Stack as="form" onSubmit={handleSubmit(onSubmit)} spacing={4}>
               <FormControl id="email" isInvalid={errors.email}>
                 <FormLabel>Email address</FormLabel>
-                <Input
-                  type="email"
-                  {...register("email", {
-                    required: "Email must be required",
-                  })}
-                />
+                <Input type="email" {...register("email")} />
                 {errors?.email && (
                   <FormErrorMessage>{errors.email.message}</FormErrorMessage>
                 )}
               </FormControl>
               <FormControl id="password" isInvalid={errors.password}>
                 <FormLabel>Password</FormLabel>
-                <Input
-                  type="password"
-                  {...register("password", {
-                    required: "Password must be required",
-                  })}
-                />
+                <Input type="password" {...register("password")} />
                 {errors?.password && (
                   <FormErrorMessage>{errors.password.message}</FormErrorMessage>
                 )}
               </FormControl>
 
-              <Button type="submit" colorScheme="green">
+              <Button
+                isLoading={isSubmitting}
+                type="submit"
+                colorScheme="green"
+              >
                 Sign in
               </Button>
             </Stack>
