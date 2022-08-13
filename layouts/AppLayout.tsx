@@ -5,7 +5,7 @@ export default function AppLayout({ children }) {
     <Box>
       <Flex as="nav">
         {/* logo  */}
-        <Avatar src="https://supabase.com/docs/supabase-dark.svg" />
+        <Avatar src="https://supabase.com/docs/supabase-dark.svg" size={"sm"} />
       </Flex>
       <Box as="main">{children}</Box>
       <Box as="footer"></Box>

@@ -3,7 +3,8 @@ import type { AppProps } from "next/app";
 import { theme } from "../theme";
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return (
+  const getLayout = Component.getLayout || ((page) => page);
+  return getLayout(
     <ChakraProvider theme={theme}>
       <Component {...pageProps} />
     </ChakraProvider>
