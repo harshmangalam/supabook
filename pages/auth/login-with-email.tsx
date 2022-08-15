@@ -17,6 +17,8 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { supabase } from "../../utils/supabaseClient";
+import { useAuthContext } from "../../context/auth";
+import { useRouter } from "next/router";
 
 const schema = yup
   .object({
@@ -26,30 +28,33 @@ const schema = yup
   .required();
 
 export default function LoginWithEmailRoute() {
+  const router = useRouter();
+  const authContext = useAuthContext();
   const toast = useToast();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm({ resolver: yupResolver(schema) });
+  } = useForm<{ email: string; password: string }>({
+    resolver: yupResolver(schema),
+  });
 
-  const onSubmit = async ({ email, password }) => {
+  const onSubmit = async ({
+    email,
+    password,
+  }: {
+    email: string;
+    password: string;
+  }) => {
     try {
-      const { user, error, session } = await supabase.auth.signUp(
-        {
-          email,
-          password,
-        },
-        {
-          data: {
-            handler: email.split("@")[0],
-          },
-        }
-      );
+      const { user, error } = await supabase.auth.signIn({
+        email,
+        password,
+      });
 
       if (user) {
-        console.log(session);
+        authContext?.loadUserSession();
         toast({
           title: "Authentication",
           description: "You have logged in successfully",
@@ -57,6 +62,7 @@ export default function LoginWithEmailRoute() {
           duration: 5000,
           isClosable: true,
         });
+        router.replace("/");
       }
 
       if (error) {
@@ -90,14 +96,14 @@ export default function LoginWithEmailRoute() {
           p={8}
         >
           <Stack as="form" onSubmit={handleSubmit(onSubmit)} spacing={4}>
-            <FormControl id="email" isInvalid={errors.email}>
+            <FormControl id="email" isInvalid={Boolean(errors.email)}>
               <FormLabel>Email address</FormLabel>
               <Input type="email" {...register("email")} />
               {errors?.email && (
                 <FormErrorMessage>{errors.email.message}</FormErrorMessage>
               )}
             </FormControl>
-            <FormControl id="password" isInvalid={errors.password}>
+            <FormControl id="password" isInvalid={Boolean(errors.password)}>
               <FormLabel>Password</FormLabel>
               <Input type="password" {...register("password")} />
               {errors?.password && (

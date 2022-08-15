@@ -34,7 +34,12 @@ export default function ProfileMenu() {
         <MenuDivider />
         <MenuItem icon={<RiSettingsLine size={24} />}>Settings</MenuItem>
         <MenuDivider />
-        <MenuItem icon={<IoLogOutOutline size={24} />}>Logout</MenuItem>
+        <MenuItem
+          onClick={authContext?.logout}
+          icon={<IoLogOutOutline size={24} />}
+        >
+          Logout
+        </MenuItem>
       </MenuList>
     </Menu>
   );

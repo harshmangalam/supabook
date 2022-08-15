@@ -7,12 +7,15 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { AiOutlineHome } from "react-icons/ai";
+import { BiLogIn } from "react-icons/bi";
 import { BsPeople } from "react-icons/bs";
+import { useAuthContext } from "../context/auth";
 import NotificationMenu from "./NotificationMenu";
 import ProfileMenu from "./ProfileMenu";
 import ThemeMode from "./ThemeMode";
 
 export default function Navbar() {
+  const authContext = useAuthContext();
   return (
     <Flex
       as="nav"
@@ -38,26 +41,40 @@ export default function Navbar() {
 
       {/* menu links  */}
 
-      <HStack spacing={4} flexGrow={1} justify="center">
-        {menus.map((menu) => (
-          <Link href={menu.href} passHref>
-            <Button
-              h={12}
-              variant={"ghost"}
-              rounded="lg"
-              leftIcon={menu.icon}
-              as="a"
-            >
-              {menu.name}
-            </Button>
-          </Link>
-        ))}
-      </HStack>
+      {authContext?.user && (
+        <HStack spacing={4} flexGrow={1} justify="center">
+          {menus.map((menu) => (
+            <Link href={menu.href} passHref>
+              <Button
+                h={12}
+                variant={"ghost"}
+                rounded="lg"
+                leftIcon={menu.icon}
+                as="a"
+              >
+                {menu.name}
+              </Button>
+            </Link>
+          ))}
+        </HStack>
+      )}
 
       <HStack spacing={4}>
         <ThemeMode />
-        <NotificationMenu />
-        <ProfileMenu />
+        {authContext?.user && <NotificationMenu />}
+        {authContext?.user && <ProfileMenu />}
+        {!authContext?.user && (
+          <Link href="/auth" passHref>
+            <Button
+              variant={"ghost"}
+              rounded="lg"
+              leftIcon={<BiLogIn size={20} />}
+              as="a"
+            >
+              Authenticate
+            </Button>
+          </Link>
+        )}
       </HStack>
     </Flex>
   );
