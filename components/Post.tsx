@@ -20,7 +20,7 @@ export default function Post() {
         <HStack spacing={4}>
           <Avatar src="https://avatars.githubusercontent.com/u/57381638?v=4" />
           <VStack spacing={0} align="start">
-            <Heading fontSize={"lg"}>Harsh</Heading>
+            <Heading fontSize={"lg"}>@harshdev8218</Heading>
             <Text fontSize={"sm"}>8h ago</Text>
           </VStack>
         </HStack>
