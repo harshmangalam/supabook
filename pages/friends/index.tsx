@@ -4,6 +4,8 @@ import {
   Grid,
   GridItem,
   Icon,
+  SimpleGrid,
+  useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -13,6 +15,7 @@ import {
   RiUserShared2Line,
   RiUserReceived2Line,
 } from "react-icons/ri";
+import Friend from "../../components/Friend";
 export default function FriendsRoute() {
   return (
     <Container maxW={"container.lg"}>
@@ -35,7 +38,13 @@ export default function FriendsRoute() {
             ))}
           </VStack>
         </GridItem>
-        <GridItem colSpan={4}></GridItem>
+        <GridItem colSpan={4}>
+          <SimpleGrid spacing={4} columns={3}>
+            {[...new Array(10)].map((friend) => (
+              <Friend {...friend} />
+            ))}
+          </SimpleGrid>
+        </GridItem>
       </Grid>
     </Container>
   );
