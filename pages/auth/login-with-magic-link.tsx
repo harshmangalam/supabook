@@ -18,6 +18,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { supabase } from "../../utils/supabaseClient";
 import { BsArrowRight } from "react-icons/bs";
+import { useToast } from "@chakra-ui/react";
 const schema = yup
   .object({
     email: yup.string().required().email(),
@@ -25,6 +26,7 @@ const schema = yup
   .required();
 
 export default function LoginWithMaginLinkRoute() {
+  const toast = useToast();
   const {
     handleSubmit,
     register,
@@ -34,11 +36,18 @@ export default function LoginWithMaginLinkRoute() {
 
   const onSubmit = async ({ email }) => {
     try {
-      const { user, error } = await supabase.auth.signIn({
+      await supabase.auth.signIn({
         email,
       });
 
       setValue("email", "");
+      toast({
+        title: "Sign in",
+        description: "Magin link sent to your email successfully",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -59,8 +68,13 @@ export default function LoginWithMaginLinkRoute() {
           boxShadow={"lg"}
           p={8}
         >
-          <Stack as="form" noValidate onSubmit={handleSubmit(onSubmit)} spacing={4}>
-            <FormControl id="email"  isInvalid={errors.email}>
+          <Stack
+            as="form"
+            noValidate
+            onSubmit={handleSubmit(onSubmit)}
+            spacing={4}
+          >
+            <FormControl id="email" isInvalid={errors.email}>
               <FormLabel>Email address</FormLabel>
               <Input type="email" {...register("email")} />
               {errors?.email ? (
