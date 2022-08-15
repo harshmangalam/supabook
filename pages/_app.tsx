@@ -8,7 +8,9 @@ export default function App({ Component, pageProps }: AppProps) {
     <ChakraProvider theme={theme}>
       <Box>
         <Navbar />
-        <Component {...pageProps} />
+        <Box as="main" my={20}>
+          <Component {...pageProps} />
+        </Box>
       </Box>
     </ChakraProvider>
   );

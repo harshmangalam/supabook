@@ -6,7 +6,7 @@ export default function Home() {
     <Container>
       {/* posts  */}
       <SimpleGrid spacing={4}>
-        {[...new Array(5)].map((post) => (
+        {[...new Array(3)].map((post) => (
           <Post {...post} />
         ))}
       </SimpleGrid>

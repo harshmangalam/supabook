@@ -1,11 +1,9 @@
 import {
   Avatar,
-  Box,
   Button,
   Flex,
   HStack,
-  IconButton,
-  Tooltip,
+  useColorModeValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { AiOutlineHome } from "react-icons/ai";
@@ -24,6 +22,12 @@ export default function Navbar() {
       h={16}
       align="center"
       px={4}
+      position="fixed"
+      top={0}
+      left={0}
+      right={0}
+      background={useColorModeValue("white", "gray.800")}
+      zIndex={"50"}
     >
       {/* logo  */}
       <Avatar
