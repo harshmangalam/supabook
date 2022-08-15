@@ -14,7 +14,9 @@ import {
 } from "@chakra-ui/react";
 import { RiSettingsLine } from "react-icons/ri";
 import { IoLogOutOutline } from "react-icons/io5";
+import { useAuthContext } from "../context/auth";
 export default function ProfileMenu() {
+  const authContext = useAuthContext();
   return (
     <Menu>
       <MenuButton>
@@ -24,7 +26,9 @@ export default function ProfileMenu() {
         <MenuItem>
           <HStack spacing={4}>
             <Avatar size={"md"} />
-            <Text fontWeight={"bold"}>Harsh Mangalam</Text>
+            <Text fontWeight={"bold"}>
+              {authContext?.user?.user_metadata?.handler}
+            </Text>
           </HStack>
         </MenuItem>
         <MenuDivider />
