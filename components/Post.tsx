@@ -15,7 +15,7 @@ import { VscComment } from "react-icons/vsc";
 
 export default function Post() {
   return (
-    <Box bg={useColorModeValue("gray.100", "gray.700")} rounded="md">
+    <Box bg={useColorModeValue("white", "gray.700")} rounded="md" borderWidth={"2px"}>
       <HStack justify={"space-between"} px={4} py={2}>
         <HStack spacing={4}>
           <Avatar src="https://avatars.githubusercontent.com/u/57381638?v=4" />

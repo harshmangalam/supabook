@@ -1,4 +1,4 @@
-import { Box, ChakraProvider } from "@chakra-ui/react";
+import { Box, ChakraProvider, useColorModeValue } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
 import Navbar from "../components/Navbar";
 import { theme } from "../theme";
@@ -6,9 +6,9 @@ import { theme } from "../theme";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
-      <Box>
+      <Box minH={"100vh"}>
         <Navbar />
-        <Box as="main" my={20}>
+        <Box as="main" py={20}>
           <Component {...pageProps} />
         </Box>
       </Box>

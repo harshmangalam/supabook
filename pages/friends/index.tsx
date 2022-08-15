@@ -5,7 +5,6 @@ import {
   GridItem,
   Icon,
   SimpleGrid,
-  useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -18,9 +17,12 @@ import {
 import Friend from "../../components/Friend";
 export default function FriendsRoute() {
   return (
-    <Container maxW={"container.lg"}>
-      <Grid templateColumns="repeat(6, 1fr)" gap={6}>
-        <GridItem colSpan={2}>
+    <Container maxW={"container.xl"}>
+      <Grid
+        templateColumns={["repeat(1, 1fr)", "repeat(1, 1fr)", "repeat(6, 1fr)"]}
+        gap={6}
+      >
+        <GridItem colSpan={[1, 1, 2]}>
           <VStack align={"start"}>
             {tabs.map((tab) => (
               <Link href={tab.href} key={tab.name} passHref>
@@ -38,8 +40,8 @@ export default function FriendsRoute() {
             ))}
           </VStack>
         </GridItem>
-        <GridItem colSpan={4}>
-          <SimpleGrid spacing={4} columns={3}>
+        <GridItem colSpan={[1, 1, 4]}>
+          <SimpleGrid spacing={4} columns={[1, 2, 2, 3]}>
             {[...new Array(10)].map((friend) => (
               <Friend {...friend} />
             ))}
