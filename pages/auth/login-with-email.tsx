@@ -31,16 +31,25 @@ export default function LoginWithEmailRoute() {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm({ resolver: yupResolver(schema) });
 
   const onSubmit = async ({ email, password }) => {
     try {
-      const { user, error } = await supabase.auth.signUp({
-        email,
-        password,
-      });
+      const { user, error, session } = await supabase.auth.signUp(
+        {
+          email,
+          password,
+        },
+        {
+          data: {
+            handler: email.split("@")[0],
+          },
+        }
+      );
 
       if (user) {
+        console.log(session);
         toast({
           title: "Authentication",
           description: "You have logged in successfully",
@@ -59,6 +68,7 @@ export default function LoginWithEmailRoute() {
           isClosable: true,
         });
       }
+      reset({ email: "", password: "" });
     } catch (error) {
       console.log(error);
     }

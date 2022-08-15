@@ -36,9 +36,16 @@ export default function LoginWithMaginLinkRoute() {
 
   const onSubmit = async ({ email }) => {
     try {
-      await supabase.auth.signIn({
-        email,
-      });
+      await supabase.auth.signUp(
+        {
+          email,
+        },
+        {
+          data: {
+            handler: email.split("@")[0],
+          },
+        }
+      );
 
       setValue("email", "");
       toast({

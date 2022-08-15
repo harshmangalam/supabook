@@ -24,7 +24,7 @@ export default function ProfileMenu() {
         <MenuItem>
           <HStack spacing={4}>
             <Avatar size={"md"} />
-            <Text fontWeight={"bold"}>@harshdev8218</Text>
+            <Text fontWeight={"bold"}>Harsh Mangalam</Text>
           </HStack>
         </MenuItem>
         <MenuDivider />
