@@ -101,7 +101,13 @@ export default function AuthSignupRoute() {
         <Heading fontSize={"4xl"} textAlign="center">
           Sign up
         </Heading>
-        <Stack as="form" onSubmit={handleSubmit(onSubmit)} spacing={4} mt={8}>
+        <Stack
+          as="form"
+          onSubmit={handleSubmit(onSubmit)}
+          spacing={4}
+          mt={8}
+          mb={6}
+        >
           <FormControl id="name" isInvalid={Boolean(errors.name)}>
             <FormLabel>Name</FormLabel>
             <Input type="text" {...register("name")} />
@@ -129,14 +135,7 @@ export default function AuthSignupRoute() {
           </Button>
         </Stack>
         <Link href={"/auth/login"} passHref>
-          <Button
-            as="a"
-            variant={"link"}
-            colorScheme="twitter"
-            size="sm"
-            mt={3}
-            w="full"
-          >
+          <Button as="a" variant={"link"} colorScheme="twitter" w="full">
             Login with existing account
           </Button>
         </Link>
