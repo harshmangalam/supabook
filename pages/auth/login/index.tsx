@@ -27,7 +27,7 @@ export default function AuthSigninRoute() {
           borderWidth={"2px"}
           p={4}
         >
-          <SimpleGrid columns={[1, 2]} spacing={2} mb={6}>
+          <SimpleGrid columns={[1, 2]} spacing={4} mb={6}>
             <Link href="/auth/login/login-with-email" passHref>
               <Button as="a" colorScheme="purple">
                 Login With Email
