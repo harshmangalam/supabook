@@ -10,19 +10,25 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Tooltip,
   useDisclosure,
 } from "@chakra-ui/react";
-import { FiImage } from "react-icons/fi";
 
-export default function UploadMedia() {
+interface Props {
+  children: React.ReactElement;
+}
+
+export default function UploadMedia({ children }: Props) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <>
-      <IconButton
-        icon={<Icon fontSize={"xl"} as={FiImage} />}
-        aria-label="Media upload"
-        onClick={onOpen}
-      />
+      <Tooltip label={"Add Post Media"}>
+        <IconButton
+          icon={children}
+          aria-label="Media upload"
+          onClick={onOpen}
+        />
+      </Tooltip>
 
       <Modal isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
