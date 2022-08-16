@@ -23,11 +23,11 @@ export default function AuthSigninRoute() {
         <Box
           rounded={"lg"}
           bg={useColorModeValue("white", "gray.700")}
-          boxShadow={"md"}
+          boxShadow={"sm"}
           borderWidth={"2px"}
           p={4}
         >
-          <SimpleGrid columns={2} spacing={2} mb={2}>
+          <SimpleGrid columns={[1, 2]} spacing={2} mb={6}>
             <Link href="/auth/login/login-with-email" passHref>
               <Button as="a" colorScheme="purple">
                 Login With Email
@@ -41,14 +41,7 @@ export default function AuthSigninRoute() {
           </SimpleGrid>
 
           <Link href={"/auth/signup"} passHref>
-            <Button
-              as="a"
-              variant={"link"}
-              colorScheme="twitter"
-              size="sm"
-              mt={3}
-              w="full"
-            >
+            <Button as="a" variant={"link"} colorScheme="twitter" w="full">
               Create new account
             </Button>
           </Link>
