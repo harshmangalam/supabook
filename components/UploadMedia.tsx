@@ -67,15 +67,6 @@ export default function UploadMedia({ children }: Props) {
           <ModalHeader>Post Media</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            <VisuallyHidden>
-              <Input
-                accept="images/*"
-                type={"file"}
-                ref={fileRef}
-                onChange={handleFileChange}
-              />
-            </VisuallyHidden>
-
             {localUrl ? (
               <Box pos={"relative"}>
                 <Image
@@ -108,6 +99,14 @@ export default function UploadMedia({ children }: Props) {
                 borderStyle={"dashed"}
               >
                 <VStack>
+                  <VisuallyHidden>
+                    <input
+                      accept="images/*"
+                      type="file"
+                      ref={fileRef}
+                      onChange={handleFileChange}
+                    />
+                  </VisuallyHidden>
                   <Icon as={FiImage} fontSize="4xl" color="green.400" />
                   <Text fontSize={"sm"}>Choose image from your device</Text>
                 </VStack>
