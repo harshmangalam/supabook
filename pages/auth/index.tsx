@@ -29,7 +29,7 @@ export default function AuthRoute() {
           <SimpleGrid columns={2} spacing={4}>
             <Link href="/auth/login" passHref>
               <Button as="a" colorScheme="blue">
-                Signin
+                Login
               </Button>
             </Link>
             <Link href="/auth/signup" passHref>
