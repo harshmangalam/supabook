@@ -95,7 +95,13 @@ export default function AuthSigninSigninWithEmailRoute() {
           </Heading>
           <Text>Login with email and password</Text>
         </VStack>
-        <Stack as="form" onSubmit={handleSubmit(onSubmit)} spacing={4} mt={8}>
+        <Stack
+          as="form"
+          onSubmit={handleSubmit(onSubmit)}
+          spacing={4}
+          mt={8}
+          mb={6}
+        >
           <FormControl id="email" isInvalid={Boolean(errors.email)}>
             <FormLabel>Email address</FormLabel>
             <Input type="email" {...register("email")} />
@@ -116,14 +122,7 @@ export default function AuthSigninSigninWithEmailRoute() {
           </Button>
         </Stack>
         <Link href={"/auth/login"} passHref>
-          <Button
-            as="a"
-            variant={"link"}
-            colorScheme="twitter"
-            size="sm"
-            mt={3}
-            w="full"
-          >
+          <Button as="a" variant={"link"} colorScheme="twitter" w="full">
             View other login options
           </Button>
         </Link>
