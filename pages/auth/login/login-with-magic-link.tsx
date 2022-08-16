@@ -69,13 +69,19 @@ export default function SigninSigninWithMagicLinkRoute() {
         p={8}
         mt={4}
       >
-       <VStack>
-       <Heading fontSize={"4xl"} textAlign="center">
-          Login
-        </Heading>
-        <Text>Login with magic link</Text>
-       </VStack>
-        <Stack as="form" onSubmit={handleSubmit(onSubmit)} spacing={4} mt={8}>
+        <VStack>
+          <Heading fontSize={"4xl"} textAlign="center">
+            Login
+          </Heading>
+          <Text>Login with magic link</Text>
+        </VStack>
+        <Stack
+          as="form"
+          onSubmit={handleSubmit(onSubmit)}
+          spacing={4}
+          mt={8}
+          mb={6}
+        >
           <FormControl id="email" isInvalid={Boolean(errors.email)}>
             <FormLabel>Email address</FormLabel>
             <Input type="email" {...register("email")} />
@@ -98,14 +104,7 @@ export default function SigninSigninWithMagicLinkRoute() {
           </Button>
         </Stack>
         <Link href={"/auth/login"} passHref>
-          <Button
-            as="a"
-            variant={"link"}
-            colorScheme="twitter"
-            size="sm"
-            mt={3}
-            w="full"
-          >
+          <Button as="a" variant={"link"} colorScheme="twitter" w="full">
             View other login options
           </Button>
         </Link>
