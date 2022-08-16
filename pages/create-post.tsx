@@ -3,10 +3,12 @@ import {
   Container,
   FormErrorMessage,
   Heading,
+  HStack,
   Stack,
   Textarea,
   useColorModeValue,
 } from "@chakra-ui/react";
+import UploadMedia from "../components/Post/UploadMedia";
 
 export default function CreatePostRoute() {
   return (
@@ -24,6 +26,9 @@ export default function CreatePostRoute() {
 
         <Stack spacing={4} mt={8}>
           <Textarea rows={8} />
+          <HStack spacing={4}>
+            <UploadMedia />
+          </HStack>
         </Stack>
       </Box>
     </Container>
