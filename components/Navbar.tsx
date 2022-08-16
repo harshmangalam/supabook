@@ -10,6 +10,7 @@ import { AiOutlineHome } from "react-icons/ai";
 import { BiLogIn } from "react-icons/bi";
 import { BsPeople } from "react-icons/bs";
 import { useAuthContext } from "../context/auth";
+import CreateMenu from "./CreateMenu";
 import NotificationMenu from "./NotificationMenu";
 import ProfileMenu from "./ProfileMenu";
 import ThemeMode from "./ThemeMode";
@@ -51,9 +52,8 @@ export default function Navbar() {
           {menus.map((menu) => (
             <Link href={menu.href} passHref>
               <Button
-                h={12}
                 variant={"ghost"}
-                rounded="lg"
+                rounded="full"
                 leftIcon={menu.icon}
                 as="a"
               >
@@ -68,6 +68,7 @@ export default function Navbar() {
         <ThemeMode />
         {authContext?.user ? (
           <HStack spacing={4}>
+            <CreateMenu />
             <NotificationMenu />
             <ProfileMenu />
           </HStack>
