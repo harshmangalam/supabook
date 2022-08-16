@@ -42,7 +42,7 @@ export default function Navbar() {
       {/* menu links  */}
 
       {authContext?.user && (
-        <HStack display={["none","flex"]} spacing={4} flexGrow={1} justify="center">
+        <HStack display={["none","none","flex"]} spacing={4} flexGrow={1} justify="center">
           {menus.map((menu) => (
             <Link href={menu.href} passHref>
               <Button
