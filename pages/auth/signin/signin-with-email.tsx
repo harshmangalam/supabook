@@ -111,7 +111,7 @@ export default function AuthSigninSigninWithEmailRoute() {
               )}
             </FormControl>
 
-            <Button isLoading={isSubmitting} type="submit" colorScheme="green">
+            <Button isLoading={isSubmitting} type="submit" colorScheme="purple">
               Sign in
             </Button>
           </Stack>
