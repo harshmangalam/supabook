@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Box,
   Button,
   Flex,
   HStack,
@@ -44,14 +45,15 @@ export default function Navbar() {
 
       {authContext?.user && (
         <HStack
-          display={["none", "none", "flex"]}
-          spacing={4}
+          display={["none", "flex"]}
+          spacing={[2, 2, 4]}
           flexGrow={1}
           justify="center"
         >
           {menus.map((menu) => (
             <Link href={menu.href} passHref>
               <Button
+                size={["sm", "sm", "md"]}
                 variant={"ghost"}
                 rounded="full"
                 leftIcon={menu.icon}
@@ -64,10 +66,10 @@ export default function Navbar() {
         </HStack>
       )}
 
-      <HStack spacing={4}>
+      <HStack spacing={2}>
         <ThemeMode />
         {authContext?.user ? (
-          <HStack spacing={4}>
+          <HStack spacing={2}>
             <CreateMenu />
             <NotificationMenu />
             <ProfileMenu />
@@ -80,7 +82,7 @@ export default function Navbar() {
               leftIcon={<BiLogIn size={20} />}
               as="a"
             >
-              Authenticate
+              <Box as="span">Authenticate</Box>
             </Button>
           </Link>
         )}

@@ -6,7 +6,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { AiOutlineHome, AiOutlinePlus } from "react-icons/ai";
+import { AiOutlineHome } from "react-icons/ai";
 import { BsPeople } from "react-icons/bs";
 
 export default function BottomNav() {
@@ -22,17 +22,16 @@ export default function BottomNav() {
       right={0}
       background={useColorModeValue("white", "gray.800")}
       zIndex={"50"}
-    
+      borderTopWidth="2px"
     >
       {tabs.map((tab) => (
         <Link href={tab.href} passHref>
-          <Tooltip label={tab.name}>
-            <IconButton
-              variant={"ghost"}
-              icon={<Icon fontSize={"24px"} as={tab.icon} />}
-              aria-label={tab.name}
-            />
-          </Tooltip>
+          <IconButton
+            variant={"ghost"}
+            icon={<Icon fontSize={"24px"} as={tab.icon} />}
+            aria-label={tab.name}
+            as="a"
+          />
         </Link>
       ))}
     </HStack>
@@ -49,10 +48,5 @@ const tabs = [
     icon: BsPeople,
     name: "Friends",
     href: "/friends",
-  },
-  {
-    icon: AiOutlinePlus,
-    name: "Create Post",
-    href: "/create-post",
   },
 ];

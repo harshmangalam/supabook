@@ -11,6 +11,7 @@ import {
   IconButton,
   Tooltip,
   Button,
+  Icon,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { RiNotification2Line } from "react-icons/ri";
@@ -21,7 +22,7 @@ export default function NotificationMenu() {
         <IconButton
           rounded={"full"}
           aria-label="Notifications"
-          icon={<RiNotification2Line size={24} />}
+          icon={<Icon as={RiNotification2Line} fontSize={"lg"} />}
         />
       </PopoverTrigger>
       <PopoverContent>

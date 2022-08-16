@@ -14,8 +14,8 @@ export default function App({ Component, pageProps }: AppProps) {
           <Box as="main" py={20}>
             <Component {...pageProps} />
           </Box>
-          <Box display={["block","block","none"]}>
-          <BottomNav/>
+          <Box display={["block", "none"]}>
+            <BottomNav />
           </Box>
         </Box>
       </AuthProvider>
