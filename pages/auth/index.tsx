@@ -22,8 +22,9 @@ export default function AuthRoute() {
         <Box
           rounded={"lg"}
           bg={useColorModeValue("white", "gray.700")}
-          boxShadow={"lg"}
+          boxShadow={"md"}
           p={4}
+          borderWidth={"2px"}
         >
           <SimpleGrid columns={2} spacing={4}>
             <Link href="/auth/login" passHref>
