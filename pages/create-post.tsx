@@ -42,7 +42,7 @@ export default function CreatePostRoute() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
-          <HStack spacing={4}>
+          <HStack spacing={4} justify="center">
             <UploadMedia addMediaUrl={(url) => setMediaUrl(url)}>
               <Icon fontSize={"xl"} as={FiImage} color="green.400" />
             </UploadMedia>
