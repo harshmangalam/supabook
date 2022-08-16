@@ -26,14 +26,14 @@ export default function AuthRoute() {
           p={4}
         >
           <SimpleGrid columns={2} spacing={4}>
-            <Link href="/auth/login-with-email" passHref>
-              <Button as="a" colorScheme="green">
-                Login With Email
+            <Link href="/auth/signin" passHref>
+              <Button as="a" colorScheme="blue">
+                Signin
               </Button>
             </Link>
-            <Link href="/auth/login-with-magic-link" passHref>
+            <Link href="/auth/signup" passHref>
               <Button as="a" colorScheme="green">
-                Login With Maginc Link
+                Signup
               </Button>
             </Link>
           </SimpleGrid>

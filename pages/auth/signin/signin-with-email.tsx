@@ -16,19 +16,18 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { supabase } from "../../utils/supabaseClient";
-import { useAuthContext } from "../../context/auth";
+import { supabase } from "../../../utils/supabaseClient";
+import { useAuthContext } from "../../../context/auth";
 import { useRouter } from "next/router";
 
 const schema = yup
   .object({
-    name: yup.string().required(),
     email: yup.string().required().email(),
     password: yup.string().required().min(6),
   })
   .required();
 
-export default function AuthSignupRoute() {
+export default function AuthSigninSigninWithEmailRoute() {
   const router = useRouter();
   const authContext = useAuthContext();
   const toast = useToast();
@@ -37,40 +36,33 @@ export default function AuthSignupRoute() {
     register,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<{ name:string,email: string; password: string }>({
+  } = useForm<{ email: string; password: string }>({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = async ({
-    name,
     email,
     password,
   }: {
-    name:string;
     email: string;
     password: string;
   }) => {
     try {
-      const { user, error } = await supabase.auth.signUp({
+      const { user, error } = await supabase.auth.signIn({
         email,
         password,
-      },{
-        data:{
-            handler:email.split("@")[0],
-            name
-        }
       });
 
       if (user) {
         authContext?.loadUserSession();
         toast({
           title: "Authentication",
-          description: "Your account created successfully",
+          description: "You have logged in successfully",
           status: "success",
           duration: 5000,
           isClosable: true,
         });
-        router.push("/auth/signin/login-with-email");
+        router.replace("/");
       }
 
       if (error) {
@@ -82,7 +74,7 @@ export default function AuthSignupRoute() {
           isClosable: true,
         });
       }
-      
+      reset({ email: "", password: "" });
     } catch (error) {
       console.log(error);
     }
@@ -104,13 +96,6 @@ export default function AuthSignupRoute() {
           p={8}
         >
           <Stack as="form" onSubmit={handleSubmit(onSubmit)} spacing={4}>
-          <FormControl id="name" isInvalid={Boolean(errors.name)}>
-              <FormLabel>Name</FormLabel>
-              <Input type="text" {...register("name")} />
-              {errors?.name && (
-                <FormErrorMessage>{errors.name.message}</FormErrorMessage>
-              )}
-            </FormControl>
             <FormControl id="email" isInvalid={Boolean(errors.email)}>
               <FormLabel>Email address</FormLabel>
               <Input type="email" {...register("email")} />
@@ -130,7 +115,7 @@ export default function AuthSignupRoute() {
               Sign in
             </Button>
           </Stack>
-          <Link href={"/auth"} passHref>
+          <Link href={"/auth/signin"} passHref>
             <Button
               as="a"
               variant={"link"}

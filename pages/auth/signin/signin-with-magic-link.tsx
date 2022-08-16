@@ -16,7 +16,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { supabase } from "../../utils/supabaseClient";
+import { supabase } from "../../../utils/supabaseClient";
 import { BsArrowRight } from "react-icons/bs";
 import { useToast } from "@chakra-ui/react";
 const schema = yup
@@ -25,16 +25,16 @@ const schema = yup
   })
   .required();
 
-export default function LoginWithMaginLinkRoute() {
+export default function SigninSigninWithMagicLinkRoute() {
   const toast = useToast();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
     setValue,
-  } = useForm({ resolver: yupResolver(schema) });
+  } = useForm<{email:string}>({ resolver: yupResolver(schema) });
 
-  const onSubmit = async ({ email }) => {
+  const onSubmit = async ({ email }:{email:string}) => {
     try {
       await supabase.auth.signUp(
         {
@@ -81,7 +81,7 @@ export default function LoginWithMaginLinkRoute() {
             onSubmit={handleSubmit(onSubmit)}
             spacing={4}
           >
-            <FormControl id="email" isInvalid={errors.email}>
+            <FormControl id="email" isInvalid={Boolean(errors.email)}>
               <FormLabel>Email address</FormLabel>
               <Input type="email" {...register("email")} />
               {errors?.email ? (
@@ -102,7 +102,7 @@ export default function LoginWithMaginLinkRoute() {
               Continue
             </Button>
           </Stack>
-          <Link href={"/auth"} passHref>
+          <Link href={"/auth/signin"} passHref>
             <Button
               as="a"
               variant={"link"}
