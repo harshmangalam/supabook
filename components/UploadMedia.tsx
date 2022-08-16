@@ -25,9 +25,10 @@ import { AiOutlineDelete } from "react-icons/ai";
 
 interface Props {
   children: React.ReactElement;
+  addMediaUrl: (mediaUrl: string) => void;
 }
 
-export default function UploadMedia({ children }: Props) {
+export default function UploadMedia({ children, addMediaUrl }: Props) {
   const fileRef = React.useRef<HTMLInputElement | null>(null);
   const [localUrl, setLocalUrl] = React.useState<string>("");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -50,6 +51,11 @@ export default function UploadMedia({ children }: Props) {
       URL.revokeObjectURL(localUrl);
       setLocalUrl("");
     }
+  };
+
+  const handleDone = () => {
+    addMediaUrl(localUrl);
+    onClose();
   };
   return (
     <>
@@ -115,7 +121,9 @@ export default function UploadMedia({ children }: Props) {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="green">Done</Button>
+            <Button colorScheme="green" onClick={handleDone}>
+              Done
+            </Button>
           </ModalFooter>
         </ModalContent>
       </Modal>

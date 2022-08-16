@@ -17,6 +17,10 @@ export default function CreatePostRoute() {
   const [content, setContent] = useState("");
   const [mediaUrl, setMediaUrl] = useState("");
 
+  const handleCreatePost = async () => {
+    console.log(content, mediaUrl);
+    setContent("");
+  };
   return (
     <Container>
       <Box
@@ -32,13 +36,18 @@ export default function CreatePostRoute() {
         </Heading>
 
         <Stack spacing={4} mt={8}>
-          <Textarea rows={8} placeholder={"Start typing post content..."} />
+          <Textarea
+            rows={8}
+            placeholder={"Start typing post content..."}
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
           <HStack spacing={4}>
-            <UploadMedia>
+            <UploadMedia addMediaUrl={(url) => setMediaUrl(url)}>
               <Icon fontSize={"xl"} as={FiImage} color="green.400" />
             </UploadMedia>
           </HStack>
-          <Button colorScheme="green" w="full">
+          <Button colorScheme="green" w="full" onClick={handleCreatePost}>
             Create Post
           </Button>
         </Stack>
