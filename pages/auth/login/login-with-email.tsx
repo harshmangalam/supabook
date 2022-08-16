@@ -11,6 +11,7 @@ import {
   Container,
   FormErrorMessage,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -81,54 +82,52 @@ export default function AuthSigninSigninWithEmailRoute() {
   };
   return (
     <Container>
-      <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-        <Stack align={"center"}>
-          <Heading fontSize={"4xl"}>Authenticate</Heading>
-          <Text fontSize={"lg"} color={"gray.600"}>
-            Login With Email
-          </Text>
+      <Box
+        rounded={"lg"}
+        bg={useColorModeValue("white", "gray.700")}
+        boxShadow={"outline"}
+        p={8}
+        mt={4}
+      >
+        <VStack>
+          <Heading fontSize={"4xl"} textAlign="center">
+            Login
+          </Heading>
+          <Text>Login with email and password</Text>
+        </VStack>
+        <Stack as="form" onSubmit={handleSubmit(onSubmit)} spacing={4} mt={8}>
+          <FormControl id="email" isInvalid={Boolean(errors.email)}>
+            <FormLabel>Email address</FormLabel>
+            <Input type="email" {...register("email")} />
+            {errors?.email && (
+              <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+            )}
+          </FormControl>
+          <FormControl id="password" isInvalid={Boolean(errors.password)}>
+            <FormLabel>Password</FormLabel>
+            <Input type="password" {...register("password")} />
+            {errors?.password && (
+              <FormErrorMessage>{errors.password.message}</FormErrorMessage>
+            )}
+          </FormControl>
+
+          <Button isLoading={isSubmitting} type="submit" colorScheme="purple">
+            Login
+          </Button>
         </Stack>
-
-        <Box
-          rounded={"lg"}
-          bg={useColorModeValue("white", "gray.700")}
-          boxShadow={"lg"}
-          p={8}
-        >
-          <Stack as="form" onSubmit={handleSubmit(onSubmit)} spacing={4}>
-            <FormControl id="email" isInvalid={Boolean(errors.email)}>
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" {...register("email")} />
-              {errors?.email && (
-                <FormErrorMessage>{errors.email.message}</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl id="password" isInvalid={Boolean(errors.password)}>
-              <FormLabel>Password</FormLabel>
-              <Input type="password" {...register("password")} />
-              {errors?.password && (
-                <FormErrorMessage>{errors.password.message}</FormErrorMessage>
-              )}
-            </FormControl>
-
-            <Button isLoading={isSubmitting} type="submit" colorScheme="purple">
-              Sign in
-            </Button>
-          </Stack>
-          <Link href={"/auth/signin"} passHref>
-            <Button
-              as="a"
-              variant={"link"}
-              colorScheme="twitter"
-              size="sm"
-              mt={3}
-              w="full"
-            >
-              View other login options
-            </Button>
-          </Link>
-        </Box>
-      </Stack>
+        <Link href={"/auth/login"} passHref>
+          <Button
+            as="a"
+            variant={"link"}
+            colorScheme="twitter"
+            size="sm"
+            mt={3}
+            w="full"
+          >
+            View other login options
+          </Button>
+        </Link>
+      </Box>
     </Container>
   );
 }

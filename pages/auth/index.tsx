@@ -15,8 +15,8 @@ export default function AuthRoute() {
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Authenticate</Heading>
-          <Text fontSize={"lg"} color={"gray.600"} maxW="md" textAlign={"center"}>
-            Sign in your account using different type of authentication providers provided by supabase
+          <Text fontSize={"lg"}  maxW="md" textAlign={"center"}>
+            Authenticate your account using different type of authentication providers
           </Text>
         </Stack>
         <Box
@@ -26,7 +26,7 @@ export default function AuthRoute() {
           p={4}
         >
           <SimpleGrid columns={2} spacing={4}>
-            <Link href="/auth/signin" passHref>
+            <Link href="/auth/login" passHref>
               <Button as="a" colorScheme="blue">
                 Signin
               </Button>

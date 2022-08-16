@@ -14,9 +14,9 @@ import {
       <Container>
         <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
           <Stack align={"center"}>
-            <Heading fontSize={"4xl"}>Signin</Heading>
-            <Text fontSize={"lg"} color={"gray.600"} maxW="md" textAlign={"center"}>
-              Signin your account using different type of authentication providers
+            <Heading fontSize={"4xl"}>Login</Heading>
+            <Text fontSize={"lg"} maxW="md" textAlign={"center"}>
+              Login your account using different type of authentication providers
             </Text>
           </Stack>
           <Box
@@ -27,14 +27,14 @@ import {
             p={6}
           >
             <HStack>
-              <Link href="/auth/signin/signin-with-email" passHref>
+              <Link href="/auth/login/login-with-email" passHref>
                 <Button as="a" colorScheme="purple">
-                  Signin With Email
+                  Login With Email
                 </Button>
               </Link>
-              <Link href="/auth/signin/signin-with-magic-link" passHref>
+              <Link href="/auth/login/login-with-magic-link" passHref>
                 <Button as="a" colorScheme="pink">
-                  Signin With Maginc Link
+                  Login With Maginc Link
                 </Button>
               </Link>
             </HStack>

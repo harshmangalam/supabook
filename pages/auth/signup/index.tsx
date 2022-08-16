@@ -37,7 +37,7 @@ export default function AuthSignupRoute() {
     register,
     formState: { errors, isSubmitting },
     reset,
-  } = useForm<{ name:string,email: string; password: string }>({
+  } = useForm<{ name: string; email: string; password: string }>({
     resolver: yupResolver(schema),
   });
 
@@ -46,20 +46,23 @@ export default function AuthSignupRoute() {
     email,
     password,
   }: {
-    name:string;
+    name: string;
     email: string;
     password: string;
   }) => {
     try {
-      const { user, error } = await supabase.auth.signUp({
-        email,
-        password,
-      },{
-        data:{
-            handler:email.split("@")[0],
-            name
+      const { user, error } = await supabase.auth.signUp(
+        {
+          email,
+          password,
+        },
+        {
+          data: {
+            handler: email.split("@")[0],
+            name,
+          },
         }
-      });
+      );
 
       if (user) {
         authContext?.loadUserSession();
@@ -70,7 +73,7 @@ export default function AuthSignupRoute() {
           duration: 5000,
           isClosable: true,
         });
-        router.push("/auth/signin/login-with-email");
+        router.push("/auth/login/login-with-email");
       }
 
       if (error) {
@@ -82,65 +85,62 @@ export default function AuthSignupRoute() {
           isClosable: true,
         });
       }
-      
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <Container>
-     
-       
-
-        <Box
-          rounded={"lg"}
-          bg={useColorModeValue("white", "gray.700")}
-          boxShadow={"outline"}
-          p={8}
-          mt={4}
-        >
-           <Heading fontSize={"4xl"} textAlign="center">Sign up</Heading>
-          <Stack as="form" onSubmit={handleSubmit(onSubmit)} spacing={4} mt={8}>
+      <Box
+        rounded={"lg"}
+        bg={useColorModeValue("white", "gray.700")}
+        boxShadow={"outline"}
+        p={8}
+        mt={4}
+      >
+        <Heading fontSize={"4xl"} textAlign="center">
+          Sign up
+        </Heading>
+        <Stack as="form" onSubmit={handleSubmit(onSubmit)} spacing={4} mt={8}>
           <FormControl id="name" isInvalid={Boolean(errors.name)}>
-              <FormLabel>Name</FormLabel>
-              <Input type="text" {...register("name")} />
-              {errors?.name && (
-                <FormErrorMessage>{errors.name.message}</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl id="email" isInvalid={Boolean(errors.email)}>
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" {...register("email")} />
-              {errors?.email && (
-                <FormErrorMessage>{errors.email.message}</FormErrorMessage>
-              )}
-            </FormControl>
-            <FormControl id="password" isInvalid={Boolean(errors.password)}>
-              <FormLabel>Password</FormLabel>
-              <Input type="password" {...register("password")} />
-              {errors?.password && (
-                <FormErrorMessage>{errors.password.message}</FormErrorMessage>
-              )}
-            </FormControl>
+            <FormLabel>Name</FormLabel>
+            <Input type="text" {...register("name")} />
+            {errors?.name && (
+              <FormErrorMessage>{errors.name.message}</FormErrorMessage>
+            )}
+          </FormControl>
+          <FormControl id="email" isInvalid={Boolean(errors.email)}>
+            <FormLabel>Email address</FormLabel>
+            <Input type="email" {...register("email")} />
+            {errors?.email && (
+              <FormErrorMessage>{errors.email.message}</FormErrorMessage>
+            )}
+          </FormControl>
+          <FormControl id="password" isInvalid={Boolean(errors.password)}>
+            <FormLabel>Password</FormLabel>
+            <Input type="password" {...register("password")} />
+            {errors?.password && (
+              <FormErrorMessage>{errors.password.message}</FormErrorMessage>
+            )}
+          </FormControl>
 
-            <Button isLoading={isSubmitting} type="submit" colorScheme="green">
-              Sign up
-            </Button>
-          </Stack>
-          <Link href={"/auth/signin"} passHref>
-            <Button
-              as="a"
-              variant={"link"}
-              colorScheme="twitter"
-              size="sm"
-              mt={3}
-              w="full"
-            >
-              Signin with existing account
-            </Button>
-          </Link>
-        </Box>
-      
+          <Button isLoading={isSubmitting} type="submit" colorScheme="green">
+            Sign up
+          </Button>
+        </Stack>
+        <Link href={"/auth/login"} passHref>
+          <Button
+            as="a"
+            variant={"link"}
+            colorScheme="twitter"
+            size="sm"
+            mt={3}
+            w="full"
+          >
+            Login with existing account
+          </Button>
+        </Link>
+      </Box>
     </Container>
   );
 }
