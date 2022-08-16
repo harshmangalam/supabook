@@ -42,7 +42,12 @@ export default function Navbar() {
       {/* menu links  */}
 
       {authContext?.user && (
-        <HStack display={["none","none","flex"]} spacing={4} flexGrow={1} justify="center">
+        <HStack
+          display={["none", "none", "flex"]}
+          spacing={4}
+          flexGrow={1}
+          justify="center"
+        >
           {menus.map((menu) => (
             <Link href={menu.href} passHref>
               <Button
@@ -61,9 +66,12 @@ export default function Navbar() {
 
       <HStack spacing={4}>
         <ThemeMode />
-        {authContext?.user && <NotificationMenu />}
-        {authContext?.user && <ProfileMenu />}
-        {!authContext?.user && (
+        {authContext?.user ? (
+          <HStack spacing={4}>
+            <NotificationMenu />
+            <ProfileMenu />
+          </HStack>
+        ) : (
           <Link href="/auth" passHref>
             <Button
               variant={"ghost"}
