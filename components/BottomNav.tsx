@@ -1,15 +1,13 @@
-import {
-  HStack,
-  Icon,
-  IconButton,
-  Tooltip,
-  useColorModeValue,
-} from "@chakra-ui/react";
+import { HStack, Icon, IconButton, useColorModeValue } from "@chakra-ui/react";
 import Link from "next/link";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsPeople } from "react-icons/bs";
+import { useAuthContext } from "../context/auth";
 
 export default function BottomNav() {
+  const authContext = useAuthContext();
+
+  if (!authContext?.user) return null;
   return (
     <HStack
       as="nav"
