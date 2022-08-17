@@ -1,16 +1,14 @@
 import {
   Avatar,
+  Box,
   Button,
   Container,
-  Grid,
-  GridItem,
   Heading,
   HStack,
   Icon,
   Stack,
   Tag,
   Text,
-  useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -18,13 +16,27 @@ import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import { BsFilePostFill } from "react-icons/bs";
 import { FaUserFriends } from "react-icons/fa";
+import useSWR from "swr";
+import { fetchProfileDetails } from "../services/profile";
 interface Props {
   children: ReactNode;
 }
 export default function ProfileLayout({ children }: Props) {
   const router = useRouter();
+
+  const { data: profile, error } = useSWR(`/${router.query.profileId}`, () =>
+    fetchProfileDetails(router.query.profileId as string)
+  );
+
+  if (error) {
+    return <pre>{JSON.stringify(error, null, 4)}</pre>;
+  }
+
+  if (!error && !profile) {
+    return <p>Loading...</p>;
+  }
   return (
-    <Container maxW={"container.xl"}>
+    <Container maxW={"container.md"}>
       <Stack
         direction={["column", "column", "row"]}
         spacing={6}
@@ -53,36 +65,25 @@ export default function ProfileLayout({ children }: Props) {
           </Button>
         </VStack>
       </Stack>
-      <Grid
-        templateColumns={["repeat(1, 1fr)", "repeat(1, 1fr)", "repeat(6, 1fr)"]}
-        gap={6}
-        mt={6}
-      >
-        <GridItem colSpan={[1, 1, 2]}>
-          <VStack align={"start"}>
-            {tabs.map((tab) => (
-              <Link href={tab.href} key={tab.name} passHref>
-                <Button
-                  bg={
-                    router.pathname === tab.href
-                      ? useColorModeValue("gray.100", "gray.700")
-                      : ""
-                  }
-                  as="a"
-                  leftIcon={
-                    <Icon fontSize={22} color="green.500" as={tab.icon} />
-                  }
-                  variant={"ghost"}
-                  rounded="full"
-                >
-                  {tab.name}
-                </Button>
-              </Link>
-            ))}
-          </VStack>
-        </GridItem>
-        <GridItem colSpan={[1, 1, 4]}>{children}</GridItem>
-      </Grid>
+
+      <HStack spacing={4} mt={6} justify="center">
+        {tabs.map((tab) => (
+          <Link
+            href={`/${router.query.profileId}/${tab.href}`}
+            passHref
+            key={tab.name}
+          >
+            <Button
+              as={"a"}
+              leftIcon={<Icon fontSize={"lg"} as={tab.icon} />}
+              rounded={"full"}
+            >
+              {tab.name}
+            </Button>
+          </Link>
+        ))}
+      </HStack>
+      <Box mt={4}>{children}</Box>
     </Container>
   );
 }
@@ -90,12 +91,12 @@ export default function ProfileLayout({ children }: Props) {
 const tabs = [
   {
     name: "Posts",
-    href: "/profile",
+    href: "",
     icon: BsFilePostFill,
   },
   {
     name: "Friends",
-    href: "/profile/friends",
+    href: "friends",
     icon: FaUserFriends,
   },
 ];
