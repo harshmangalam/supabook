@@ -14,6 +14,7 @@ import Link from "next/link";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { VscComment } from "react-icons/vsc";
+import { useAuthContext } from "../context/auth";
 
 interface Props {
   id: string;
@@ -29,6 +30,7 @@ export default function Post({
   media,
   author,
 }: Props) {
+  const authContext = useAuthContext();
   return (
     <Box
       bg={useColorModeValue("white", "gray.700")}
@@ -51,15 +53,13 @@ export default function Post({
         />
       </HStack>
 
-      <Link href={`/${id}`} passHref>
-        <VStack as="a">
+      <Link href={id} passHref>
+        <Box as="a">
           <Image src={media} w="full" h={"400px"} loading="lazy" />
-          <Text p={4}>{content}</Text>
-        </VStack>
+        </Box>
       </Link>
-
       <HStack justify={"space-between"}>
-        <HStack px={4} py={4}>
+        <HStack px={4} py={2}>
           <AiOutlineHeart size={16} />
           <Text fontSize={"sm"}>{18}</Text>
           <Text fontSize={"sm"}>Likes</Text>
@@ -71,10 +71,25 @@ export default function Post({
         </HStack>
       </HStack>
       <Divider />
-      <HStack px={4} py={4}>
-        <IconButton aria-label="Like" icon={<AiOutlineHeart size={20} />} />
-        <IconButton aria-label="Comment" icon={<VscComment size={20} />} />
-      </HStack>
+      {content && <Text p={4}>{content}</Text>}
+
+      {authContext?.user && (
+        <>
+          <Divider />
+          <HStack px={4} py={4}>
+            <IconButton
+              size={"sm"}
+              aria-label="Like"
+              icon={<AiOutlineHeart size={20} />}
+            />
+            <IconButton
+              size={"sm"}
+              aria-label="Comment"
+              icon={<VscComment size={20} />}
+            />
+          </HStack>
+        </>
+      )}
     </Box>
   );
 }
