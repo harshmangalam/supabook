@@ -12,7 +12,6 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { AiOutlineHeart } from "react-icons/ai";
-import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { VscComment } from "react-icons/vsc";
 import { useAuthContext } from "../context/auth";
 import PostAction from "./Post/PostAction";
@@ -49,12 +48,9 @@ export default function Post({
 
         {authContext?.user?.id === author.id && <PostAction id={id} />}
       </HStack>
+      <Divider />
 
-      <Link href={id} passHref>
-        <Box as="a">
-          <Image src={media} w="full" h={"400px"} loading="lazy" />
-        </Box>
-      </Link>
+      {media && <Image src={media.url} w="full" h={"400px"} loading="lazy" />}
       <HStack justify={"space-between"}>
         <HStack px={4} py={2}>
           <AiOutlineHeart size={16} />
@@ -68,11 +64,19 @@ export default function Post({
         </HStack>
       </HStack>
       <Divider />
-      {content && <Text p={4}>{content}</Text>}
+      {content && (
+        <>
+          <Link href={id} passHref>
+            <Box as="a">
+              <Text p={4}>{content}</Text>
+            </Box>
+          </Link>
+          <Divider />
+        </>
+      )}
 
       {authContext?.user && (
         <>
-          <Divider />
           <HStack px={4} py={4}>
             <IconButton
               size={"sm"}

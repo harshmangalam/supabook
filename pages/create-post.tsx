@@ -20,7 +20,7 @@ export default function CreatePostRoute() {
   const router = useRouter();
   const authContext = useAuthContext();
   const [content, setContent] = useState("");
-  const [media, setMedia] = useState("");
+  const [media, setMedia] = useState();
   const [inserting, setInserting] = useState(false);
 
   const handleCreatePost = async () => {
@@ -73,7 +73,7 @@ export default function CreatePostRoute() {
           />
           <HStack spacing={4}>
             <UploadMedia
-              addMediaUrl={(mediaUrl) => setMedia(mediaUrl)}
+              addMediaFile={(mediaData) => setMedia(mediaData)}
               bucket="post"
             >
               <Icon fontSize={"xl"} as={FiImage} color="green.400" />

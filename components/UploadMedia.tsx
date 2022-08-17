@@ -27,11 +27,11 @@ import shortid from "shortid";
 
 interface Props {
   children: React.ReactElement;
-  addMediaUrl: (mediaUrl: string) => void;
+  addMediaFile: (media: any) => void;
   bucket: string;
 }
 
-export default function UploadMedia({ children, addMediaUrl, bucket }: Props) {
+export default function UploadMedia({ children, addMediaFile, bucket }: Props) {
   const fileRef = React.useRef<HTMLInputElement | null>(null);
   // relative file path for media in supabase storage
   const [mediaPath, setMediaPath] = React.useState<string>("");
@@ -114,7 +114,7 @@ export default function UploadMedia({ children, addMediaUrl, bucket }: Props) {
 
   // send media path to parent component
   const handleUpload = () => {
-    addMediaUrl(mediaUrl);
+    addMediaFile({ url: mediaUrl, path: mediaPath });
     onClose();
   };
   return (
