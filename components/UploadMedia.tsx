@@ -33,29 +33,36 @@ interface Props {
 
 export default function UploadMedia({ children, addMediaKey, bucket }: Props) {
   const fileRef = React.useRef<HTMLInputElement | null>(null);
+  // relative file path for media in supabase storage
   const [mediaPath, setMediaPath] = React.useState<string>("");
+  // blob url generated from supabase blob object
   const [mediaUrl, setMediaUrl] = React.useState("");
   const [uploading, setUploading] = React.useState(false);
   const [deleting, setDeleting] = React.useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  // open input file to select media
   const handleOpenFile = () => {
     fileRef.current?.click();
   };
   const handleFileChange = async (e: any) => {
     setUploading(true);
     try {
+      // file path where media will upload
       const mediaPath = `public/${shortid()}.jpg`;
       setMediaPath(mediaPath);
       const file = (e.target as HTMLInputElement).files?.[0] as File;
+      // uploa file in supabase
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from(bucket)
         .upload(mediaPath, file);
       if (uploadData) {
+        // get blob of uploaded media
         const { data } = await supabase.storage
           .from(bucket)
           .download(mediaPath);
 
+        // create blob url for preview
         const blobUrl = URL.createObjectURL(data as Blob);
         setMediaUrl(blobUrl);
       }
@@ -72,6 +79,7 @@ export default function UploadMedia({ children, addMediaKey, bucket }: Props) {
   React.useEffect(() => {
     return () => {
       if (mediaUrl) {
+        // remove blob url object from memory
         URL.revokeObjectURL(mediaUrl);
       }
     };
@@ -81,6 +89,7 @@ export default function UploadMedia({ children, addMediaKey, bucket }: Props) {
     setDeleting(true);
     try {
       if (mediaPath) {
+        // delete media file friom supabase
         const { data: removeData, error: removeError } = await supabase.storage
           .from(bucket)
           .remove([mediaPath]);
@@ -89,6 +98,7 @@ export default function UploadMedia({ children, addMediaKey, bucket }: Props) {
         }
         if (removeData) {
           if (mediaUrl) {
+            // dereference object blob from memory
             URL.revokeObjectURL(mediaUrl);
             setMediaUrl("");
             setMediaPath("");
@@ -102,6 +112,7 @@ export default function UploadMedia({ children, addMediaKey, bucket }: Props) {
     }
   };
 
+  // send media path to parent component
   const handleUpload = () => {
     addMediaKey(mediaPath);
     onClose();
@@ -125,6 +136,7 @@ export default function UploadMedia({ children, addMediaKey, bucket }: Props) {
             {uploading ? (
               <Skeleton h={"200px"} w="full" rounded={"md"} />
             ) : mediaUrl ? (
+              // image preview with delete image options show when image upload from browser
               <Box pos={"relative"}>
                 <Image
                   src={mediaUrl}
@@ -148,6 +160,7 @@ export default function UploadMedia({ children, addMediaKey, bucket }: Props) {
                 </Box>
               </Box>
             ) : (
+              // image upload interface show when there is no image for preview
               <Center
                 onClick={handleOpenFile}
                 borderWidth={"2px"}
