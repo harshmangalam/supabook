@@ -18,6 +18,7 @@ export default function Home({ posts }) {
 
 export async function getServerSideProps() {
   const { data } = await supabase.from("post").select(`*,author(*)`);
+  console.log(data);
   return {
     props: {
       posts: data,
