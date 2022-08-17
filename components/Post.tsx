@@ -13,15 +13,32 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { VscComment } from "react-icons/vsc";
 
-export default function Post() {
+interface Props {
+  id: string;
+  created_at: string;
+  content: string;
+  media: any;
+  author: any;
+}
+export default function Post({
+  id,
+  created_at,
+  content,
+  media,
+  author,
+}: Props) {
   return (
-    <Box bg={useColorModeValue("white", "gray.700")} rounded="md" borderWidth={"2px"}>
+    <Box
+      bg={useColorModeValue("white", "gray.700")}
+      rounded="md"
+      borderWidth={"2px"}
+    >
       <HStack justify={"space-between"} px={4} py={2}>
         <HStack spacing={4}>
           <Avatar src="https://avatars.githubusercontent.com/u/57381638?v=4" />
           <VStack spacing={0} align="start">
-            <Heading fontSize={"lg"}>@harshdev8218</Heading>
-            <Text fontSize={"sm"}>8h ago</Text>
+            <Heading fontSize={"lg"}>{author}</Heading>
+            <Text fontSize={"sm"}>{new Date(created_at).toDateString()}</Text>
           </VStack>
         </HStack>
 
@@ -32,13 +49,7 @@ export default function Post() {
         />
       </HStack>
 
-      <Image
-        src={
-          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ75CtS0Dxo_w6wYNSfg2sjkMRNq7dVUwiiCw&usqp=CAU"
-        }
-        w="full"
-        h={"400px"}
-      />
+      <Image src={media.url} w="full" h={"400px"} />
 
       <HStack justify={"space-between"}>
         <HStack px={4} py={4}>
