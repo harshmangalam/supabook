@@ -15,6 +15,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { VscComment } from "react-icons/vsc";
 import { useAuthContext } from "../context/auth";
+import PostAction from "./Post/PostAction";
 
 interface Props {
   id: string;
@@ -46,11 +47,7 @@ export default function Post({
           </VStack>
         </HStack>
 
-        <IconButton
-          size="sm"
-          icon={<BiDotsHorizontalRounded size={18} />}
-          aria-label="Actions"
-        />
+        {authContext?.user?.id === author.id && <PostAction />}
       </HStack>
 
       <Link href={id} passHref>
