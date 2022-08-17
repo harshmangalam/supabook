@@ -6,7 +6,6 @@ import {
   Icon,
   IconButton,
   Image,
-  Input,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -14,6 +13,7 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Skeleton,
   Text,
   Tooltip,
   useDisclosure,
@@ -22,39 +22,88 @@ import {
 } from "@chakra-ui/react";
 import { FiImage } from "react-icons/fi";
 import { AiOutlineDelete } from "react-icons/ai";
+import { supabase } from "../utils/supabaseClient";
+import shortid from "shortid";
 
 interface Props {
   children: React.ReactElement;
-  addMediaUrl: (mediaUrl: string) => void;
+  addMediaKey: (mediaPath: string) => void;
+  bucket: string;
 }
 
-export default function UploadMedia({ children, addMediaUrl }: Props) {
+export default function UploadMedia({ children, addMediaKey, bucket }: Props) {
   const fileRef = React.useRef<HTMLInputElement | null>(null);
-  const [localUrl, setLocalUrl] = React.useState<string>("");
+  const [mediaPath, setMediaPath] = React.useState<string>("");
+  const [mediaUrl, setMediaUrl] = React.useState("");
+  const [uploading, setUploading] = React.useState(false);
+  const [deleting, setDeleting] = React.useState(false);
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleOpenFile = () => {
     fileRef.current?.click();
   };
-  const handleFileChange = (e: any) => {
-    const file = (e.target as HTMLInputElement).files?.[0];
-    const objectUrl = URL.createObjectURL(file as File);
-    setLocalUrl(objectUrl);
-  };
+  const handleFileChange = async (e: any) => {
+    setUploading(true);
+    try {
+      const mediaPath = `public/${shortid()}.jpg`;
+      setMediaPath(mediaPath);
+      const file = (e.target as HTMLInputElement).files?.[0] as File;
+      const { data: uploadData, error: uploadError } = await supabase.storage
+        .from(bucket)
+        .upload(mediaPath, file);
+      if (uploadData) {
+        const { data } = await supabase.storage
+          .from(bucket)
+          .download(mediaPath);
 
-  React.useEffect(() => {
-    return () => handleRemoveMedia();
-  }, []);
-
-  const handleRemoveMedia = () => {
-    if (localUrl) {
-      URL.revokeObjectURL(localUrl);
-      setLocalUrl("");
+        const blobUrl = URL.createObjectURL(data as Blob);
+        setMediaUrl(blobUrl);
+      }
+      if (uploadError) {
+        console.log(uploadError.message);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setUploading(false);
     }
   };
 
-  const handleDone = () => {
-    addMediaUrl(localUrl);
+  React.useEffect(() => {
+    return () => {
+      if (mediaUrl) {
+        URL.revokeObjectURL(mediaUrl);
+      }
+    };
+  }, []);
+
+  const handleRemoveMedia = async () => {
+    setDeleting(true);
+    try {
+      if (mediaPath) {
+        const { data: removeData, error: removeError } = await supabase.storage
+          .from(bucket)
+          .remove([mediaPath]);
+        if (removeError) {
+          console.log(removeError.message);
+        }
+        if (removeData) {
+          if (mediaUrl) {
+            URL.revokeObjectURL(mediaUrl);
+            setMediaUrl("");
+            setMediaPath("");
+          }
+        }
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setDeleting(false);
+    }
+  };
+
+  const handleUpload = () => {
+    addMediaKey(mediaPath);
     onClose();
   };
   return (
@@ -73,10 +122,12 @@ export default function UploadMedia({ children, addMediaUrl }: Props) {
           <ModalHeader>Post Media</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {localUrl ? (
+            {uploading ? (
+              <Skeleton h={"200px"} w="full" rounded={"md"} />
+            ) : mediaUrl ? (
               <Box pos={"relative"}>
                 <Image
-                  src={localUrl}
+                  src={mediaUrl}
                   h={"200px"}
                   w="full"
                   objectFit={"cover"}
@@ -86,6 +137,7 @@ export default function UploadMedia({ children, addMediaUrl }: Props) {
                 <Box pos={"absolute"} top={2} right={2}>
                   <Tooltip label={"Remove Media"}>
                     <IconButton
+                      isLoading={deleting}
                       onClick={handleRemoveMedia}
                       size={"xs"}
                       colorScheme="red"
@@ -121,8 +173,12 @@ export default function UploadMedia({ children, addMediaUrl }: Props) {
           </ModalBody>
 
           <ModalFooter>
-            <Button colorScheme="green" onClick={handleDone}>
-              Done
+            <Button
+              disabled={uploading}
+              colorScheme="green"
+              onClick={handleUpload}
+            >
+              Upload
             </Button>
           </ModalFooter>
         </ModalContent>

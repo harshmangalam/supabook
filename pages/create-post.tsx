@@ -15,11 +15,15 @@ import UploadMedia from "../components/UploadMedia";
 
 export default function CreatePostRoute() {
   const [content, setContent] = useState("");
-  const [mediaUrl, setMediaUrl] = useState("");
+  const [media, setMedia] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleCreatePost = async () => {
-    console.log(content, mediaUrl);
+    setLoading(true);
+
     setContent("");
+    console.log(media);
+    console.log(content);
   };
   return (
     <Container>
@@ -42,12 +46,17 @@ export default function CreatePostRoute() {
             value={content}
             onChange={(e) => setContent(e.target.value)}
           />
-          <HStack spacing={4} justify="center">
-            <UploadMedia addMediaUrl={(url) => setMediaUrl(url)}>
+          <HStack spacing={4}>
+            <UploadMedia addMediaKey={(key) => setMedia(key)} bucket="post">
               <Icon fontSize={"xl"} as={FiImage} color="green.400" />
             </UploadMedia>
           </HStack>
-          <Button colorScheme="green" w="full" onClick={handleCreatePost}>
+          <Button
+            isLoading={loading}
+            colorScheme="green"
+            w="full"
+            onClick={handleCreatePost}
+          >
             Create Post
           </Button>
         </Stack>
