@@ -15,8 +15,9 @@ import { supabase } from "../../utils/supabaseClient";
 
 interface Props {
   id: string;
+  media: any;
 }
-export default function PostAction({ id }: Props) {
+export default function PostAction({ id, media }: Props) {
   const router = useRouter();
   const toast = useToast();
   const [loading, setLoading] = useState("");
@@ -37,6 +38,9 @@ export default function PostAction({ id }: Props) {
         });
       }
       if (data) {
+        if (media?.path) {
+          await supabase.storage.from("post").remove([media.path]);
+        }
         toast({
           status: "success",
           title: "Delete Post",

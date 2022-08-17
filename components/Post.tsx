@@ -46,7 +46,9 @@ export default function Post({
           </VStack>
         </HStack>
 
-        {authContext?.user?.id === author.id && <PostAction id={id} />}
+        {authContext?.user?.id === author.id && (
+          <PostAction id={id} media={media} />
+        )}
       </HStack>
       <Divider />
 
