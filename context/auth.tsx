@@ -11,6 +11,7 @@ import { supabase } from "../utils/supabaseClient";
 
 interface IContext {
   user: any;
+  isAuthenticating: boolean;
   logout: () => void;
   loadUserSession: () => void;
 }
@@ -20,15 +21,22 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
   const toast = useToast();
   const [user, setUser] = useState<any>(null);
+  const [isAuthenticating, setIsAuthenticating] = useState(true);
 
   const loadUserSession = async () => {
-    const session = await supabase.auth.session();
-    if (session?.user) {
-      const { data } = await supabase
-        .from("profile")
-        .select("id, user_id, name ,avatar_url")
-        .eq("user_id", session?.user.id);
-      setUser(data?.[0]);
+    try {
+      const session = await supabase.auth.session();
+      if (session?.user) {
+        const { data } = await supabase
+          .from("profile")
+          .select("id, user_id, name ,avatar_url")
+          .eq("user_id", session?.user.id);
+        setUser(data?.[0]);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsAuthenticating(false);
     }
   };
   useEffect(() => {
@@ -61,7 +69,9 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthContext.Provider value={{ logout, user, loadUserSession }}>
+    <AuthContext.Provider
+      value={{ logout, user, loadUserSession, isAuthenticating }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   HStack,
+  SkeletonCircle,
   useColorModeValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -68,7 +69,13 @@ export default function Navbar() {
 
       <HStack spacing={2}>
         <ThemeMode />
-        {authContext?.user ? (
+        {authContext?.isAuthenticating ? (
+          <HStack spacing={2}>
+            <SkeletonCircle size="10" />
+            <SkeletonCircle size="10" />
+            <SkeletonCircle size="10" />
+          </HStack>
+        ) : authContext?.user ? (
           <HStack spacing={2}>
             <CreateMenu />
             <NotificationMenu />
