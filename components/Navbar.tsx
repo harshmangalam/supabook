@@ -4,6 +4,7 @@ import {
   Button,
   Flex,
   HStack,
+  Image,
   SkeletonCircle,
   useColorModeValue,
 } from "@chakra-ui/react";
@@ -36,11 +37,16 @@ export default function Navbar() {
       zIndex={"50"}
     >
       {/* logo  */}
-      <Avatar
-        size={"md"}
-        background="transparent"
-        src="https://marketplace-assets.digitalocean.com/logos/supabase-supabasepostgres-18-04.svg"
-      />
+      <Link href={"/"} passHref>
+        <Box as="a" w={"40px"} h={"40px"}>
+          <Image
+            w="full"
+            h="full"
+            background="transparent"
+            src="https://marketplace-assets.digitalocean.com/logos/supabase-supabasepostgres-18-04.svg"
+          />
+        </Box>
+      </Link>
 
       {/* menu links  */}
 
