@@ -16,15 +16,13 @@ export default function ProfileMenu() {
   return (
     <Menu>
       <MenuButton>
-        <Avatar size={"sm"} />
+        <Avatar size={"sm"} src={authContext?.user?.avatar_url} />
       </MenuButton>
       <MenuList>
         <MenuItem>
           <HStack spacing={4}>
-            <Avatar size={"md"} />
-            <Text fontWeight={"bold"}>
-              {authContext?.user?.user_metadata?.handler}
-            </Text>
+            <Avatar size={"md"} src={authContext?.user?.avatar_url} />
+            <Text fontWeight={"bold"}>{authContext?.user?.name}</Text>
           </HStack>
         </MenuItem>
         <MenuDivider />
