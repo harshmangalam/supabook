@@ -1,19 +1,4 @@
-import {
-  Button,
-  Container,
-  Grid,
-  GridItem,
-  Icon,
-  SimpleGrid,
-  VStack,
-} from "@chakra-ui/react";
-import Link from "next/link";
-import {
-  RiUserFollowLine,
-  RiUserLocationLine,
-  RiUserShared2Line,
-  RiUserReceived2Line,
-} from "react-icons/ri";
+import { SimpleGrid } from "@chakra-ui/react";
 import Friend from "../../components/Friend";
 import FriendsLayout from "../../layouts/FriendsLayout";
 export default function FriendsSuggestionsRoute() {
