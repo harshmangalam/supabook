@@ -3,6 +3,7 @@ import Post from "../components/Post";
 import { supabase } from "../utils/supabaseClient";
 
 export default function Home({ posts }) {
+  console.log(posts);
   return (
     <Container>
       {/* posts  */}
@@ -16,7 +17,7 @@ export default function Home({ posts }) {
 }
 
 export async function getServerSideProps() {
-  const { data } = await supabase.from("post");
+  const { data } = await supabase.from("post").select(`*,author(*)`);
   return {
     props: {
       posts: data,

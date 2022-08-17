@@ -35,9 +35,9 @@ export default function Post({
     >
       <HStack justify={"space-between"} px={4} py={2}>
         <HStack spacing={4}>
-          <Avatar src="https://avatars.githubusercontent.com/u/57381638?v=4" />
+          <Avatar src={author.avatar_url} />
           <VStack spacing={0} align="start">
-            <Heading fontSize={"lg"}>{author}</Heading>
+            <Heading fontSize={"lg"}>{author.name}</Heading>
             <Text fontSize={"sm"}>{new Date(created_at).toDateString()}</Text>
           </VStack>
         </HStack>
