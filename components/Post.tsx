@@ -49,7 +49,7 @@ export default function Post({
         />
       </HStack>
 
-      <Image src={media.url} w="full" h={"400px"} />
+      <Image src={media} w="full" h={"400px"} loading="lazy" />
 
       <HStack justify={"space-between"}>
         <HStack px={4} py={4}>
