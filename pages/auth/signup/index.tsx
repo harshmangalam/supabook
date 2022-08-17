@@ -51,20 +51,20 @@ export default function AuthSignupRoute() {
     password: string;
   }) => {
     try {
-      const { user, error } = await supabase.auth.signUp(
-        {
-          email,
-          password,
-        },
-        {
-          data: {
-            handler: email.split("@")[0],
-            name,
-          },
-        }
-      );
+      const { user, error } = await supabase.auth.signUp({
+        email,
+        password,
+      });
 
       if (user) {
+        await supabase.from("profile").insert([
+          {
+            name,
+            avatar_url:
+              "https://images.unsplash.com/photo-1660673642948-74a0d9f5a63e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyN3x8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
+            user_info: user,
+          },
+        ]);
         authContext?.loadUserSession();
         toast({
           title: "Authentication",
