@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Container,
+  Divider,
   Heading,
   HStack,
   Stack,
@@ -15,12 +16,16 @@ import { supabase } from "../../utils/supabaseClient";
 export default function Profile({ profile }) {
   console.log(profile);
   return (
-    <Container maxW={"container.sm"}>
+    <Container maxW={"container.md"}>
       <Stack
         direction={["column", "column", "row"]}
         spacing={6}
         align={"center"}
-        justify="space-between"
+        justify="space-evenly"
+        shadow={"sm"}
+        p={4}
+        borderWidth={"2px"}
+        rounded="md"
       >
         <Avatar src={profile?.avatar?.url} w={"200px"} h={"200px"} />
 
