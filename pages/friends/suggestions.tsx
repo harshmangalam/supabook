@@ -1,4 +1,4 @@
-import { SimpleGrid } from "@chakra-ui/react";
+import { Button, SimpleGrid } from "@chakra-ui/react";
 import Friend from "../../components/Friend";
 import FriendsLayout from "../../layouts/FriendsLayout";
 import { supabase } from "../../utils/supabaseClient";
@@ -7,7 +7,11 @@ export default function FriendsSuggestionsRoute({ users }) {
     <FriendsLayout>
       <SimpleGrid spacing={4} columns={[1, 2, 2, 3]}>
         {users.map((user) => (
-          <Friend {...user} />
+          <Friend {...user}>
+            <Button colorScheme={"green"} width="full">
+              Add Friend
+            </Button>
+          </Friend>
         ))}
       </SimpleGrid>
     </FriendsLayout>

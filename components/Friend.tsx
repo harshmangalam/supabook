@@ -1,13 +1,12 @@
 import {
   Box,
-  Button,
   Heading,
   Image,
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 
-export default function Friend({ id, name, avatar }) {
+export default function Friend({ id, name, avatar, children }) {
   return (
     <Box
       bg={useColorModeValue("white", "gray.700")}
@@ -25,9 +24,7 @@ export default function Friend({ id, name, avatar }) {
         {name}
       </Heading>
       <VStack p={4} mt={6}>
-        <Button colorScheme={"red"} width="full">
-          Unfriend
-        </Button>
+        {children}
       </VStack>
     </Box>
   );
