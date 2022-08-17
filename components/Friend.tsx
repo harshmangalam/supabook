@@ -14,11 +14,12 @@ export default function Friend({ id, name, avatar, children }) {
       borderWidth={"2px"}
     >
       <Image
-        src={avatar}
+        src={avatar?.url}
         width={"full"}
         h={"240px"}
         roundedTop="md"
         objectFit="cover"
+        roundedTopEnd={"md"}
       />
       <Heading p={4} fontSize={"md"}>
         {name}

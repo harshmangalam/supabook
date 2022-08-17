@@ -83,7 +83,7 @@ export default function ProfileLayout({ children }: Props) {
           </Link>
         ))}
       </HStack>
-      <Box mt={4}>{children}</Box>
+      <Box mt={6}>{children}</Box>
     </Container>
   );
 }
