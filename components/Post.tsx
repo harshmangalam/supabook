@@ -1,6 +1,7 @@
 import {
   Avatar,
   Box,
+  Divider,
   Heading,
   HStack,
   IconButton,
@@ -9,6 +10,7 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
+import Link from "next/link";
 import { AiOutlineHeart } from "react-icons/ai";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { VscComment } from "react-icons/vsc";
@@ -49,7 +51,12 @@ export default function Post({
         />
       </HStack>
 
-      <Image src={media} w="full" h={"400px"} loading="lazy" />
+      <Link href={`/${id}`} passHref>
+        <VStack as="a">
+          <Image src={media} w="full" h={"400px"} loading="lazy" />
+          <Text p={4}>{content}</Text>
+        </VStack>
+      </Link>
 
       <HStack justify={"space-between"}>
         <HStack px={4} py={4}>
@@ -63,6 +70,7 @@ export default function Post({
           <Text fontSize={"sm"}>Comments</Text>
         </HStack>
       </HStack>
+      <Divider />
       <HStack px={4} py={4}>
         <IconButton aria-label="Like" icon={<AiOutlineHeart size={20} />} />
         <IconButton aria-label="Comment" icon={<VscComment size={20} />} />
