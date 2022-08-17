@@ -47,7 +47,7 @@ export default function Post({
           </VStack>
         </HStack>
 
-        {authContext?.user?.id === author.id && <PostAction />}
+        {authContext?.user?.id === author.id && <PostAction id={id} />}
       </HStack>
 
       <Link href={id} passHref>
