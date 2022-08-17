@@ -29,7 +29,7 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       if (session?.user) {
         const { data } = await supabase
           .from("profile")
-          .select("id, user_id, name ,avatar_url")
+          .select("id, user_id, name ,avatar")
           .eq("user_id", session?.user.id);
         setUser(data?.[0]);
       }

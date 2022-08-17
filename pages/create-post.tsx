@@ -9,21 +9,46 @@ import {
   Textarea,
   useColorModeValue,
 } from "@chakra-ui/react";
+import { useRouter } from "next/router";
 import { useState } from "react";
 import { FiImage } from "react-icons/fi";
 import UploadMedia from "../components/UploadMedia";
+import { useAuthContext } from "../context/auth";
+import { supabase } from "../utils/supabaseClient";
 
 export default function CreatePostRoute() {
+  const router = useRouter();
+  const authContext = useAuthContext();
   const [content, setContent] = useState("");
   const [media, setMedia] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [inserting, setInserting] = useState(false);
 
   const handleCreatePost = async () => {
-    setLoading(true);
+    setInserting(true);
 
-    setContent("");
-    console.log(media);
-    console.log(content);
+    try {
+      const { data: postCreateData, error: postCreateError } = await supabase
+        .from("post")
+        .insert([
+          {
+            content,
+            media,
+            author: authContext?.user.id,
+          },
+        ]);
+
+      if (postCreateData) {
+        router.push("/");
+      }
+
+      if (postCreateError) {
+        console.log(postCreateError.message);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setInserting(false);
+    }
   };
   return (
     <Container>
@@ -47,12 +72,15 @@ export default function CreatePostRoute() {
             onChange={(e) => setContent(e.target.value)}
           />
           <HStack spacing={4}>
-            <UploadMedia addMediaKey={(key) => setMedia(key)} bucket="post">
+            <UploadMedia
+              addMediaUrl={(mediaUrl) => setMedia(mediaUrl)}
+              bucket="post"
+            >
               <Icon fontSize={"xl"} as={FiImage} color="green.400" />
             </UploadMedia>
           </HStack>
           <Button
-            isLoading={loading}
+            isLoading={inserting}
             colorScheme="green"
             w="full"
             onClick={handleCreatePost}

@@ -27,15 +27,15 @@ import shortid from "shortid";
 
 interface Props {
   children: React.ReactElement;
-  addMediaKey: (mediaPath: string) => void;
+  addMediaUrl: (mediaUrl: string) => void;
   bucket: string;
 }
 
-export default function UploadMedia({ children, addMediaKey, bucket }: Props) {
+export default function UploadMedia({ children, addMediaUrl, bucket }: Props) {
   const fileRef = React.useRef<HTMLInputElement | null>(null);
   // relative file path for media in supabase storage
   const [mediaPath, setMediaPath] = React.useState<string>("");
-  // blob url generated from supabase blob object
+  // signed media url for preview
   const [mediaUrl, setMediaUrl] = React.useState("");
   const [uploading, setUploading] = React.useState(false);
   const [deleting, setDeleting] = React.useState(false);
@@ -57,14 +57,17 @@ export default function UploadMedia({ children, addMediaKey, bucket }: Props) {
         .from(bucket)
         .upload(mediaPath, file);
       if (uploadData) {
-        // get blob of uploaded media
-        const { data } = await supabase.storage
+        // get signed url of uploaded media
+        const { signedURL, error: signedUrlError } = await supabase.storage
           .from(bucket)
-          .download(mediaPath);
+          .createSignedUrl(mediaPath, 60);
 
-        // create blob url for preview
-        const blobUrl = URL.createObjectURL(data as Blob);
-        setMediaUrl(blobUrl);
+        if (signedUrlError) {
+          console.log(signedUrlError.message);
+        }
+        if (signedURL) {
+          setMediaUrl(signedURL);
+        }
       }
       if (uploadError) {
         console.log(uploadError.message);
@@ -76,14 +79,14 @@ export default function UploadMedia({ children, addMediaKey, bucket }: Props) {
     }
   };
 
-  React.useEffect(() => {
-    return () => {
-      if (mediaUrl) {
-        // remove blob url object from memory
-        URL.revokeObjectURL(mediaUrl);
-      }
-    };
-  }, []);
+  // React.useEffect(() => {
+  //   return () => {
+  //     if (mediaUrl) {
+  //       // remove blob url object from memory
+  //       URL.revokeObjectURL(mediaUrl);
+  //     }
+  //   };
+  // }, []);
 
   const handleRemoveMedia = async () => {
     setDeleting(true);
@@ -97,12 +100,9 @@ export default function UploadMedia({ children, addMediaKey, bucket }: Props) {
           console.log(removeError.message);
         }
         if (removeData) {
-          if (mediaUrl) {
-            // dereference object blob from memory
-            URL.revokeObjectURL(mediaUrl);
-            setMediaUrl("");
-            setMediaPath("");
-          }
+          // URL.revokeObjectURL(mediaUrl);
+          setMediaUrl("");
+          setMediaPath("");
         }
       }
     } catch (error) {
@@ -114,7 +114,7 @@ export default function UploadMedia({ children, addMediaKey, bucket }: Props) {
 
   // send media path to parent component
   const handleUpload = () => {
-    addMediaKey(mediaPath);
+    addMediaUrl(mediaUrl);
     onClose();
   };
   return (
