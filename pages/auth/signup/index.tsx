@@ -6,7 +6,6 @@ import {
   Stack,
   Button,
   Heading,
-  Text,
   useColorModeValue,
   Container,
   FormErrorMessage,
@@ -17,7 +16,6 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { supabase } from "../../../utils/supabaseClient";
-import { useAuthContext } from "../../../context/auth";
 import { useRouter } from "next/router";
 
 const schema = yup
@@ -30,13 +28,11 @@ const schema = yup
 
 export default function AuthSignupRoute() {
   const router = useRouter();
-  const authContext = useAuthContext();
   const toast = useToast();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-    reset,
   } = useForm<{ name: string; email: string; password: string }>({
     resolver: yupResolver(schema),
   });
@@ -65,7 +61,6 @@ export default function AuthSignupRoute() {
             user_info: user,
           },
         ]);
-        authContext?.loadUserSession();
         toast({
           title: "Authentication",
           description: "Your account created successfully",
