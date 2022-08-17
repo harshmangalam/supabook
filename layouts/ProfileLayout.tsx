@@ -3,12 +3,15 @@ import {
   Box,
   Button,
   Container,
+  Grid,
+  GridItem,
   Heading,
   HStack,
   Icon,
   Stack,
   Tag,
   Text,
+  useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -66,24 +69,26 @@ export default function ProfileLayout({ children }: Props) {
         </VStack>
       </Stack>
 
-      <HStack spacing={4} mt={6} justify="center">
-        {tabs.map((tab) => (
-          <Link
-            href={`/${router.query.profileId}/${tab.href}`}
-            passHref
-            key={tab.name}
-          >
-            <Button
-              as={"a"}
-              leftIcon={<Icon fontSize={"lg"} as={tab.icon} />}
-              rounded={"full"}
+      <Stack spacing={8}>
+        <HStack spacing={4} mt={6} justify="center">
+          {tabs.map((tab) => (
+            <Link
+              href={`/${router.query.profileId}/${tab.href}`}
+              passHref
+              key={tab.name}
             >
-              {tab.name}
-            </Button>
-          </Link>
-        ))}
-      </HStack>
-      <Box mt={6}>{children}</Box>
+              <Button
+                as={"a"}
+                leftIcon={<Icon fontSize={"lg"} as={tab.icon} />}
+                rounded={"full"}
+              >
+                {tab.name}
+              </Button>
+            </Link>
+          ))}
+        </HStack>
+        <Box>{children}</Box>
+      </Stack>
     </Container>
   );
 }
