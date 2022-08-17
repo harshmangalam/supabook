@@ -11,6 +11,7 @@ import {
 import { RiSettingsLine } from "react-icons/ri";
 import { IoLogOutOutline } from "react-icons/io5";
 import { useAuthContext } from "../context/auth";
+import Link from "next/link";
 export default function ProfileMenu() {
   const authContext = useAuthContext();
   return (
@@ -19,12 +20,14 @@ export default function ProfileMenu() {
         <Avatar size={"sm"} src={authContext?.user?.avatar} />
       </MenuButton>
       <MenuList>
-        <MenuItem>
-          <HStack spacing={4}>
-            <Avatar size={"md"} src={authContext?.user?.avatar} />
-            <Text fontWeight={"bold"}>{authContext?.user?.name}</Text>
-          </HStack>
-        </MenuItem>
+        <Link href={`/${authContext?.user.id}`} passHref>
+          <MenuItem as="a">
+            <HStack spacing={4}>
+              <Avatar size={"md"} src={authContext?.user?.avatar} />
+              <Text fontWeight={"bold"}>{authContext?.user?.name}</Text>
+            </HStack>
+          </MenuItem>
+        </Link>
         <MenuDivider />
         <MenuItem icon={<RiSettingsLine size={24} />}>Settings</MenuItem>
         <MenuDivider />
