@@ -73,6 +73,7 @@ export default function CreatePostRoute() {
           />
           <HStack spacing={4}>
             <UploadMedia
+              tooltip="Upload post media"
               addMediaFile={(mediaData) => setMedia(mediaData)}
               bucket="post"
             >

@@ -10,6 +10,9 @@ import {
   Container,
   FormErrorMessage,
   useToast,
+  IconButton,
+  Icon,
+  Tooltip,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
@@ -17,7 +20,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { supabase } from "../../../utils/supabaseClient";
 import { useRouter } from "next/router";
-
+import UploadMedia from "../../../components/UploadMedia";
+import { useState } from "react";
+import { FaRegUser } from "react-icons/fa";
 const schema = yup
   .object({
     name: yup.string().required(),
@@ -29,11 +34,16 @@ const schema = yup
 export default function AuthSignupRoute() {
   const router = useRouter();
   const toast = useToast();
+  const [avatar, setAvatar] = useState();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm<{ name: string; email: string; password: string }>({
+  } = useForm<{
+    name: string;
+    email: string;
+    password: string;
+  }>({
     resolver: yupResolver(schema),
   });
 
@@ -56,8 +66,7 @@ export default function AuthSignupRoute() {
         await supabase.from("profile").insert([
           {
             name,
-            avatar_url:
-              "https://images.unsplash.com/photo-1660673642948-74a0d9f5a63e?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwyN3x8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
+            avatar,
             user_info: user,
           },
         ]);
@@ -124,6 +133,16 @@ export default function AuthSignupRoute() {
               <FormErrorMessage>{errors.password.message}</FormErrorMessage>
             )}
           </FormControl>
+
+          <Box>
+            <UploadMedia
+              tooltip="Upload profile avatar"
+              addMediaFile={(data) => setAvatar(data)}
+              bucket="avatar"
+            >
+              <Icon as={FaRegUser} />
+            </UploadMedia>
+          </Box>
 
           <Button isLoading={isSubmitting} type="submit" colorScheme="green">
             Sign up

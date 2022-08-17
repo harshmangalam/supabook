@@ -29,9 +29,15 @@ interface Props {
   children: React.ReactElement;
   addMediaFile: (media: any) => void;
   bucket: string;
+  tooltip: string;
 }
 
-export default function UploadMedia({ children, addMediaFile, bucket }: Props) {
+export default function UploadMedia({
+  children,
+  addMediaFile,
+  bucket,
+  tooltip,
+}: Props) {
   const fileRef = React.useRef<HTMLInputElement | null>(null);
   // relative file path for media in supabase storage
   const [mediaPath, setMediaPath] = React.useState<string>("");
@@ -119,7 +125,7 @@ export default function UploadMedia({ children, addMediaFile, bucket }: Props) {
   };
   return (
     <>
-      <Tooltip label={"Add Post Media"}>
+      <Tooltip label={tooltip}>
         <IconButton
           icon={children}
           aria-label="Media upload"
