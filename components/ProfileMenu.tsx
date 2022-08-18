@@ -17,13 +17,13 @@ export default function ProfileMenu() {
   return (
     <Menu>
       <MenuButton>
-        <Avatar size={"sm"} src={authContext?.user?.avatar} />
+        <Avatar size={"sm"} src={authContext?.user?.avatar?.url} />
       </MenuButton>
       <MenuList>
         <Link href={`/${authContext?.user.id}`} passHref>
           <MenuItem as="a">
             <HStack spacing={4}>
-              <Avatar size={"md"} src={authContext?.user?.avatar} />
+              <Avatar size={"md"} src={authContext?.user?.avatar?.url} />
               <Text fontWeight={"bold"}>{authContext?.user?.name}</Text>
             </HStack>
           </MenuItem>
