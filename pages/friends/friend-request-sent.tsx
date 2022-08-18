@@ -4,8 +4,10 @@ import useSWR from "swr";
 import Friend from "../../components/Friend";
 import { useAuthContext } from "../../context/auth";
 import FriendsLayout from "../../layouts/FriendsLayout";
-import { fetchFriendRequestSent } from "../../services/friends";
-import { supabase } from "../../utils/supabaseClient";
+import {
+  cancelFriendRequest,
+  fetchFriendRequestSent,
+} from "../../services/friends";
 export default function FriendRequestSentRoute() {
   const [loading, setLoading] = useState<string>();
   const authContext = useAuthContext();
@@ -19,32 +21,24 @@ export default function FriendRequestSentRoute() {
     fetchFriendRequestSent(authContext?.user?.id)
   );
 
-  const sendFriendRequest = async (userId: string) => {
-    setLoading(userId);
+  const handleCancelRequest = async (to: string) => {
+    setLoading(to);
     try {
-      const { data, error } = await supabase.from("friend_request").insert({
-        from: authContext?.user?.id,
-        to: userId,
+      const data = await cancelFriendRequest(authContext?.user?.id, to);
+      console.log(data);
+      toast({
+        title: "Friend Request",
+        description: "Friend request cancelled successfully",
+        status: "success",
       });
-
-      if (error) {
-        toast({
-          title: "Friend Request",
-          description: error.message,
-          status: "error",
-        });
-      }
-
-      if (data) {
-        toast({
-          title: "Friend Request",
-          description: "Friend request sent successfully",
-          status: "success",
-        });
-        mutate("/friends/friend-request-sent");
-      }
+      mutate(["/friends/friend-request-sent"]);
     } catch (error) {
       console.log(error);
+      toast({
+        title: "Friend Request",
+        description: error?.message,
+        status: "error",
+      });
     } finally {
       setLoading("");
     }
@@ -58,11 +52,11 @@ export default function FriendRequestSentRoute() {
             <Friend {...user} key={user.id}>
               <Button
                 isLoading={user.id === loading}
-                onClick={() => sendFriendRequest(user.id)}
-                colorScheme={"green"}
+                onClick={() => handleCancelRequest(user.id)}
+                colorScheme={"red"}
                 width="full"
               >
-                Add Friend
+                Cancel Request
               </Button>
             </Friend>
           ))
