@@ -7,5 +7,5 @@ export async function fetchFriendRequestSent(profileId: string) {
     .eq("from", profileId);
 
   if (error) throw error;
-  if (data) return data[0];
+  if (data) return data;
 }

@@ -19,8 +19,10 @@ import {
 
 interface Props {
   children: ReactNode;
+  loading?: boolean;
+  error?: any;
 }
-export default function FriendsLayout({ children }: Props) {
+export default function FriendsLayout({ children, loading, error }: Props) {
   const router = useRouter();
   return (
     <Container maxW={"container.xl"}>
@@ -51,7 +53,11 @@ export default function FriendsLayout({ children }: Props) {
             ))}
           </VStack>
         </GridItem>
-        <GridItem colSpan={[1, 1, 4]}>{children}</GridItem>
+        <GridItem colSpan={[1, 1, 4]}>
+          {loading && <p>Loading...</p>}
+          {error && <p>Error...</p>}
+          {!loading && !error && children}
+        </GridItem>
       </Grid>
     </Container>
   );
@@ -70,7 +76,7 @@ const tabs = [
   },
   {
     name: "Friend Requests Sent",
-    href: "/friends/friend-requests-sent",
+    href: "/friends/friend-request-sent",
     icon: RiUserShared2Line,
   },
   {
