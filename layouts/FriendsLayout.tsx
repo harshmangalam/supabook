@@ -81,7 +81,7 @@ const tabs = [
   },
   {
     name: "Friend Requests Received",
-    href: "/friends/friend-requests-received",
+    href: "/friends/friend-request-received",
     icon: RiUserReceived2Line,
   },
 ];
