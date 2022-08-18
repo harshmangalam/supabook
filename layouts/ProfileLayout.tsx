@@ -3,15 +3,12 @@ import {
   Box,
   Button,
   Container,
-  Grid,
-  GridItem,
   Heading,
   HStack,
   Icon,
   Stack,
   Tag,
   Text,
-  useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -45,10 +42,6 @@ export default function ProfileLayout({ children }: Props) {
         spacing={6}
         align={"center"}
         justify="space-evenly"
-        shadow={"sm"}
-        p={4}
-        borderWidth={"2px"}
-        rounded="md"
       >
         <Avatar src={profile?.avatar?.url} w={"200px"} h={"200px"} />
 
@@ -69,7 +62,7 @@ export default function ProfileLayout({ children }: Props) {
         </VStack>
       </Stack>
 
-      <Stack spacing={8}>
+      <Stack spacing={8} mt={8}>
         <HStack spacing={4} mt={6} justify="center">
           {tabs.map((tab) => (
             <Link
