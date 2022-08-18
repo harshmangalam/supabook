@@ -5,12 +5,12 @@ import Friend from "../../components/Friend";
 import { useAuthContext } from "../../context/auth";
 import FriendsLayout from "../../layouts/FriendsLayout";
 import {
-  cancelFriendRequest,
   fetchFriendRequestReceived,
   ignoreFriendRequest,
 } from "../../services/friends";
 export default function FriendRequestSentRoute() {
-  const [loading, setLoading] = useState<string>();
+  const [ignoring, setIgnoring] = useState<string>();
+  const [accepting, setAccepting] = useState<string>();
   const authContext = useAuthContext();
   const toast = useToast();
 
@@ -23,7 +23,7 @@ export default function FriendRequestSentRoute() {
   );
 
   const handleIgnoreRequest = async (to: string) => {
-    setLoading(to);
+    setIgnoring(to);
     try {
       const data = await ignoreFriendRequest(to, authContext?.user?.id);
       console.log(data);
@@ -41,7 +41,30 @@ export default function FriendRequestSentRoute() {
         status: "error",
       });
     } finally {
-      setLoading("");
+      setIgnoring("");
+    }
+  };
+
+  const handleAcceptRequest = async (to: string) => {
+    setAccepting(to);
+    try {
+      const data = await ignoreFriendRequest(to, authContext?.user?.id);
+      console.log(data);
+      toast({
+        title: "Friend Request",
+        description: "Friend request cancelled successfully",
+        status: "success",
+      });
+      mutate(["/friends/friend-request-received"]);
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Friend Request",
+        description: error?.message,
+        status: "error",
+      });
+    } finally {
+      setAccepting("");
     }
   };
 
@@ -53,7 +76,7 @@ export default function FriendRequestSentRoute() {
             <Friend {...user} key={user.id}>
               <VStack w="full">
                 <Button
-                  isLoading={user.id === loading}
+                  isLoading={user.id === ignoring}
                   onClick={() => handleIgnoreRequest(user.id)}
                   colorScheme={"red"}
                   width="full"
@@ -61,8 +84,8 @@ export default function FriendRequestSentRoute() {
                   Ignore Request
                 </Button>
                 <Button
-                  isLoading={user.id === loading}
-                  onClick={() => handleCancelRequest(user.id)}
+                  isLoading={user.id === accepting}
+                  onClick={() => handleAcceptRequest(user.id)}
                   colorScheme={"green"}
                   width="full"
                 >
