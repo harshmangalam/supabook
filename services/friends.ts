@@ -20,7 +20,19 @@ export async function fetchFriendRequestSent(profileId: string) {
 }
 
 export async function sendFriendRequest(from: string, to: string) {
-  console.log(from, to);
+  if (from === to)
+    throw new Error("You cannot send friend request to yourself");
+  const { data: userData, error: userError } = await supabase
+    .from("friend_request")
+    .select("id")
+    .match({
+      from,
+      to,
+    });
+
+  if (userError) throw userError;
+  if (userData?.length) throw new Error("Friend request already sent");
+
   const { data, error } = await supabase
     .from("friend_request")
     .insert({ from, to });
