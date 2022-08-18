@@ -6,7 +6,8 @@ import { useAuthContext } from "../../context/auth";
 import FriendsLayout from "../../layouts/FriendsLayout";
 import {
   cancelFriendRequest,
-  fetchFriendRequestSent,
+  fetchFriendRequestReceived,
+  ignoreFriendRequest,
 } from "../../services/friends";
 export default function FriendRequestSentRoute() {
   const [loading, setLoading] = useState<string>();
@@ -17,21 +18,21 @@ export default function FriendRequestSentRoute() {
     mutate,
     data: users,
     error: usersError,
-  } = useSWR("/friends/friend-request-sent", () =>
-    fetchFriendRequestSent(authContext?.user?.id)
+  } = useSWR("/friends/friend-request-received", () =>
+    fetchFriendRequestReceived(authContext?.user?.id)
   );
 
-  const handleCancelRequest = async (to: string) => {
+  const handleIgnoreRequest = async (to: string) => {
     setLoading(to);
     try {
-      const data = await cancelFriendRequest(authContext?.user?.id, to);
+      const data = await ignoreFriendRequest(to, authContext?.user?.id);
       console.log(data);
       toast({
         title: "Friend Request",
         description: "Friend request cancelled successfully",
         status: "success",
       });
-      mutate(["/friends/friend-request-sent"]);
+      mutate(["/friends/friend-request-received"]);
     } catch (error) {
       console.log(error);
       toast({
@@ -53,7 +54,7 @@ export default function FriendRequestSentRoute() {
               <VStack w="full">
                 <Button
                   isLoading={user.id === loading}
-                  onClick={() => handleCancelRequest(user.id)}
+                  onClick={() => handleIgnoreRequest(user.id)}
                   colorScheme={"red"}
                   width="full"
                 >

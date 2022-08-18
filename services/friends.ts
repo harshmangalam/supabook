@@ -55,9 +55,20 @@ export async function cancelFriendRequest(from: string, to: string) {
 export async function fetchFriendRequestReceived(profileId: string) {
   const { data, error } = await supabase
     .from("friend_request")
-    .select("to(id,name,avatar)")
+    .select("from(id,name,avatar)")
     .eq("to", profileId);
+  if (error) throw error;
+  if (data) return data?.map((user) => user.from);
+}
+
+export async function ignoreFriendRequest(from: string, to: string) {
+  const { data, error } = await supabase.from("friend_request").delete().match({
+    from,
+    to,
+  });
+
+  console.log(from, to);
 
   if (error) throw error;
-  if (data) return data?.map((user) => user.to);
+  if (data) return data;
 }
