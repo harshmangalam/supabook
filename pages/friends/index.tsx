@@ -4,7 +4,7 @@ import useSWR from "swr";
 import Friend from "../../components/Friend";
 import { useAuthContext } from "../../context/auth";
 import FriendsLayout from "../../layouts/FriendsLayout";
-import { fetchMyFriend } from "../../services/friends";
+import { fetchMyFriend, unfriend } from "../../services/friends";
 export default function FriendRoute() {
   const [loading, setLoading] = useState<string>();
   const authContext = useAuthContext();
@@ -16,6 +16,29 @@ export default function FriendRoute() {
     error: usersError,
   } = useSWR("/friends", () => fetchMyFriend(authContext?.user?.id));
 
+  const handleUnfriend = async (to: string) => {
+    setLoading(to);
+    try {
+      await unfriend(authContext?.user?.id, to);
+      toast({
+        title: "Friend",
+        description: "Unfriend",
+        status: "success",
+        isClosable: true,
+      });
+      mutate(["/friends"]);
+    } catch (error) {
+      console.log(error);
+      toast({
+        title: "Friend",
+        description: error?.message,
+        status: "error",
+        isClosable: true,
+      });
+    } finally {
+      setLoading("");
+    }
+  };
   return (
     <FriendsLayout loading={!usersError && !users} error={usersError}>
       <SimpleGrid spacing={4} columns={[1, 2, 2, 3]}>
@@ -26,6 +49,7 @@ export default function FriendRoute() {
                 isLoading={user.id === loading}
                 colorScheme={"red"}
                 width="full"
+                onClick={() => handleUnfriend(user.id)}
               >
                 Unfriend
               </Button>
