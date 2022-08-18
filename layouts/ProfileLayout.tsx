@@ -22,8 +22,10 @@ import UploadMedia from "../components/UploadMedia";
 import { changeProfilePic, fetchProfileDetails } from "../services/profile";
 interface Props {
   children: ReactNode;
+  loading?: boolean;
+  error?: any;
 }
-export default function ProfileLayout({ children }: Props) {
+export default function ProfileLayout({ children, loading, error }: Props) {
   const router = useRouter();
 
   const {
@@ -117,7 +119,9 @@ export default function ProfileLayout({ children }: Props) {
         </HStack>
 
         {/* dynamic page on tab change  */}
-        <Box>{children}</Box>
+        {loading && <p>Loading...</p>}
+        {error && <p>Error...</p>}
+        {!loading && !error && <Box>{children}</Box>}
       </Stack>
     </Container>
   );
