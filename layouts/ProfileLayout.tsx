@@ -16,6 +16,7 @@ import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import { BsFilePostFill } from "react-icons/bs";
 import { FaCamera, FaUserFriends } from "react-icons/fa";
+import { RiUserSettingsLine } from "react-icons/ri";
 import useSWR from "swr";
 import UploadMedia from "../components/UploadMedia";
 import { changeProfilePic, fetchProfileDetails } from "../services/profile";
@@ -68,7 +69,7 @@ export default function ProfileLayout({ children }: Props) {
               tooltip="Change profile pic"
               addMediaFile={(avatar) => handleUpdateProfilePic(avatar)}
             >
-              <Icon as={FaCamera} fontSize="lg" color={"green.500"} />
+              <Icon as={FaCamera} fontSize="lg" />
             </UploadMedia>
           </Box>
         </Box>
@@ -84,7 +85,12 @@ export default function ProfileLayout({ children }: Props) {
             <Tag>23 Friends</Tag>
             <Tag>18 Posts</Tag>
           </HStack>
-          <Button size="sm" rounded="full" colorScheme="green">
+          <Button
+            leftIcon={<RiUserSettingsLine size={18} />}
+            size="sm"
+            rounded="full"
+            colorScheme="green"
+          >
             Edit Profile
           </Button>
         </VStack>

@@ -131,6 +131,7 @@ export default function UploadMedia({
           aria-label="Media upload"
           onClick={onOpen}
           rounded="full"
+          colorScheme="green"
         />
       </Tooltip>
 
