@@ -18,41 +18,61 @@ import { BsFilePostFill } from "react-icons/bs";
 import { FaCamera, FaUserFriends } from "react-icons/fa";
 import useSWR from "swr";
 import UploadMedia from "../components/UploadMedia";
-import { fetchProfileDetails } from "../services/profile";
+import { changeProfilePic, fetchProfileDetails } from "../services/profile";
 interface Props {
   children: ReactNode;
 }
 export default function ProfileLayout({ children }: Props) {
   const router = useRouter();
 
-  const { data: profile, error } = useSWR(`/${router.query.profileId}`, () =>
+  const {
+    data: profile,
+    error: profileError,
+    mutate: profileMutate,
+  } = useSWR(`/${router.query.profileId}`, () =>
     fetchProfileDetails(router.query.profileId as string)
   );
 
-  if (error) {
-    return <pre>{JSON.stringify(error, null, 4)}</pre>;
+  const handleUpdateProfilePic = async (avatar: any) => {
+    try {
+      const data = await changeProfilePic(profile.id, avatar);
+      // revalidate profile avatar after update
+      profileMutate(`/${router.query.profileId}`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  if (profileError) {
+    return <pre>{JSON.stringify(profileError, null, 4)}</pre>;
   }
 
-  if (!error && !profile) {
+  if (!profileError && !profile) {
     return <p>Loading...</p>;
   }
   return (
     <Container maxW={"container.md"}>
+      {/* profile info section  */}
       <Stack
         direction={["column", "column", "row"]}
         spacing={6}
         align={"center"}
         justify="space-evenly"
       >
+        {/* avatar section  */}
         <Box pos="relative">
           <Avatar src={profile?.avatar?.url} w={"200px"} h={"200px"} />
           <Box pos={"absolute"} right={0} bottom={4}>
-            <UploadMedia bucket="avatar" tooltip="Change profile pic">
+            <UploadMedia
+              bucket="avatar"
+              tooltip="Change profile pic"
+              addMediaFile={(avatar) => handleUpdateProfilePic(avatar)}
+            >
               <Icon as={FaCamera} fontSize="lg" color={"green.500"} />
             </UploadMedia>
           </Box>
         </Box>
-
+        {/* content section  */}
         <VStack align={["center", "center", "start"]} spacing={2}>
           <Heading>{profile.name}</Heading>
           <Text fontSize={"xl"}>{profile.user_info?.email}</Text>
@@ -71,6 +91,7 @@ export default function ProfileLayout({ children }: Props) {
       </Stack>
 
       <Stack spacing={8} mt={8}>
+        {/* tabs section  */}
         <HStack spacing={4} mt={6} justify="center">
           {tabs.map((tab) => (
             <Link
@@ -88,6 +109,8 @@ export default function ProfileLayout({ children }: Props) {
             </Link>
           ))}
         </HStack>
+
+        {/* dynamic page on tab change  */}
         <Box>{children}</Box>
       </Stack>
     </Container>
