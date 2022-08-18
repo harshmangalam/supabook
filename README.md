@@ -1,5 +1,16 @@
 # Nextjs Supabase Social Media Web App
 
+## Tech Stack
+
+- Nextjs
+- Supabase
+- SWR
+- Chakra UI
+- Typescript
+- React icons
+- Yup
+- React hook form
+
 ## Features
 
 - Authentication
@@ -29,6 +40,7 @@
   - [ ] Share count
   - [ ] Tag friends
   - [ ] Share live location
+  - [ ] Bookmark post
 
 - Friends
   - [x] Show friends list
@@ -48,6 +60,8 @@
   - [ ] Edit information
   - [x] Update profile pic
 
+- [x] Dark theme
+- [ ] Settings
 - [ ] Realtime Chat
 - [ ] Post details
 - [ ] Video calling using webrtc and simple-peer
