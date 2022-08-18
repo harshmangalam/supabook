@@ -72,3 +72,13 @@ export async function ignoreFriendRequest(from: string, to: string) {
   if (error) throw error;
   if (data) return data;
 }
+
+export async function acceptFriendRequest(from: string, to: string) {
+  const { data, error } = await supabase.from("friend_request").delete().match({
+    from,
+    to,
+  });
+
+  if (error) throw error;
+  if (data) return data;
+}
