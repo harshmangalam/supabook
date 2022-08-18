@@ -90,10 +90,12 @@ export default function Navbar() {
         ) : (
           <Link href="/auth" passHref>
             <Button
-              variant={"ghost"}
-              rounded="lg"
-              leftIcon={<BiLogIn size={20} />}
+              variant={"solid"}
+              size="sm"
+              rounded="full"
+              leftIcon={<BiLogIn size={16} />}
               as="a"
+              colorScheme="green"
             >
               <Box as="span">Authenticate</Box>
             </Button>
