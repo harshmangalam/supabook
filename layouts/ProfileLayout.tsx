@@ -15,8 +15,9 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import { BsFilePostFill } from "react-icons/bs";
-import { FaUserFriends } from "react-icons/fa";
+import { FaCamera, FaUserFriends } from "react-icons/fa";
 import useSWR from "swr";
+import UploadMedia from "../components/UploadMedia";
 import { fetchProfileDetails } from "../services/profile";
 interface Props {
   children: ReactNode;
@@ -43,7 +44,14 @@ export default function ProfileLayout({ children }: Props) {
         align={"center"}
         justify="space-evenly"
       >
-        <Avatar src={profile?.avatar?.url} w={"200px"} h={"200px"} />
+        <Box pos="relative">
+          <Avatar src={profile?.avatar?.url} w={"200px"} h={"200px"} />
+          <Box pos={"absolute"} right={0} bottom={4}>
+            <UploadMedia bucket="avatar" tooltip="Change profile pic">
+              <Icon as={FaCamera} fontSize="lg" color={"green.500"} />
+            </UploadMedia>
+          </Box>
+        </Box>
 
         <VStack align={["center", "center", "start"]} spacing={2}>
           <Heading>{profile.name}</Heading>

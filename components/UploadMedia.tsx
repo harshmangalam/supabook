@@ -130,13 +130,14 @@ export default function UploadMedia({
           icon={children}
           aria-label="Media upload"
           onClick={onOpen}
+          rounded="full"
         />
       </Tooltip>
 
       <Modal isCentered isOpen={isOpen} onClose={onClose}>
         <ModalOverlay />
         <ModalContent>
-          <ModalHeader>Post Media</ModalHeader>
+          <ModalHeader>{tooltip}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
             {uploading ? (
