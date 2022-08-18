@@ -95,7 +95,7 @@ export default function FriendRequestSentRoute() {
             </Friend>
           ))
         ) : (
-          <p>No requests sent</p>
+          <p>No requests received</p>
         )}
       </SimpleGrid>
     </FriendsLayout>
