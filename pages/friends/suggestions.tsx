@@ -13,10 +13,11 @@ export default function FriendsSuggestionsRoute() {
   const authContext = useAuthContext();
   const toast = useToast();
 
-  const { data: users, error: usersError } = useSWR(
-    "/friends/suggestions",
-    fetchFriendSuggestion
-  );
+  const {
+    data: friendsSuggestionData,
+    error: friendsSuggestionError,
+    mutate: friendsSuggestionMutation,
+  } = useSWR("/friends/suggestions", fetchFriendSuggestion);
   const handleSendRequest = async (to: string) => {
     setLoading(to);
     try {
@@ -26,6 +27,7 @@ export default function FriendsSuggestionsRoute() {
         description: "Friend request sent successfully",
         status: "success",
       });
+      friendsSuggestionMutation(["/friends/suggestions"]);
     } catch (error) {
       console.log(error);
       toast({
@@ -38,9 +40,12 @@ export default function FriendsSuggestionsRoute() {
     }
   };
   return (
-    <FriendsLayout loading={!users && !usersError} error={usersError}>
+    <FriendsLayout
+      loading={!friendsSuggestionData && !friendsSuggestionError}
+      error={friendsSuggestionError}
+    >
       <SimpleGrid spacing={4} columns={[1, 2, 2, 3]}>
-        {users?.map((user) => (
+        {friendsSuggestionData?.map((user) => (
           <Friend {...user} key={user.id}>
             <Button
               isLoading={user.id === loading}
