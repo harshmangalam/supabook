@@ -53,14 +53,14 @@ export default function Post({
       <Divider />
 
       {media && <Image src={media.url} w="full" h={"400px"} loading="lazy" />}
-      <HStack justify={"space-between"}>
+      {/* <HStack justify={"space-between"}>
         <HStack px={4} py={2}>
           <AiOutlineHeart size={16} />
           <Text fontSize={"sm"}>{18}</Text>
           <Text fontSize={"sm"}>Likes</Text>
         </HStack>
       </HStack>
-      <Divider />
+      <Divider /> */}
       {content && (
         <>
           <Link href={id} passHref>
@@ -74,13 +74,13 @@ export default function Post({
 
       {authContext?.user && (
         <>
-          <HStack px={4} py={4}>
+          {/* <HStack px={4} py={4}>
             <IconButton
               size={"sm"}
               aria-label="Like"
               icon={<AiOutlineHeart size={20} />}
             />
-          </HStack>
+          </HStack> */}
         </>
       )}
     </Box>
