@@ -9,6 +9,7 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 import { AiOutlineHome } from "react-icons/ai";
 import { BiLogIn } from "react-icons/bi";
 import { BsPeople } from "react-icons/bs";
@@ -19,7 +20,10 @@ import ProfileMenu from "./ProfileMenu";
 import ThemeMode from "./ThemeMode";
 
 export default function Navbar() {
+  const router = useRouter();
   const authContext = useAuthContext();
+
+  console.log(router.pathname);
   return (
     <Flex
       as="nav"
@@ -65,6 +69,7 @@ export default function Navbar() {
                 rounded="full"
                 leftIcon={menu.icon}
                 as="a"
+                colorScheme={router.pathname === menu.href ? "green" : "gray"}
               >
                 {menu.name}
               </Button>
