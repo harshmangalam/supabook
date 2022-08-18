@@ -5,6 +5,7 @@ import Friend from "../../components/Friend";
 import { useAuthContext } from "../../context/auth";
 import FriendsLayout from "../../layouts/FriendsLayout";
 import {
+  acceptFriendRequest,
   fetchFriendRequestReceived,
   ignoreFriendRequest,
 } from "../../services/friends";
@@ -22,14 +23,13 @@ export default function FriendRequestSentRoute() {
     fetchFriendRequestReceived(authContext?.user?.id)
   );
 
-  const handleIgnoreRequest = async (to: string) => {
-    setIgnoring(to);
+  const handleIgnoreRequest = async (from: string) => {
+    setIgnoring(from);
     try {
-      const data = await ignoreFriendRequest(to, authContext?.user?.id);
-      console.log(data);
+      await ignoreFriendRequest(from, authContext?.user?.id);
       toast({
         title: "Friend Request",
-        description: "Friend request cancelled successfully",
+        description: "Friend request ignored successfully",
         status: "success",
       });
       mutate(["/friends/friend-request-received"]);
@@ -45,14 +45,14 @@ export default function FriendRequestSentRoute() {
     }
   };
 
-  const handleAcceptRequest = async (to: string) => {
-    setAccepting(to);
+  const handleAcceptRequest = async (from: string) => {
+    setAccepting(from);
     try {
-      const data = await ignoreFriendRequest(to, authContext?.user?.id);
-      console.log(data);
+      await acceptFriendRequest(from, authContext?.user?.id);
+
       toast({
         title: "Friend Request",
-        description: "Friend request cancelled successfully",
+        description: "Friend request accepted successfully",
         status: "success",
       });
       mutate(["/friends/friend-request-received"]);
