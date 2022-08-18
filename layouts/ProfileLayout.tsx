@@ -38,7 +38,10 @@ export default function ProfileLayout({ children, loading, error }: Props) {
 
   const handleUpdateProfilePic = async (avatar: any) => {
     try {
-      const data = await changeProfilePic(profile.id, avatar);
+      const data = await changeProfilePic(
+        router.query.profileId as string,
+        avatar
+      );
       // revalidate profile avatar after update
       profileMutate(`/${router.query.profileId}`);
     } catch (error) {

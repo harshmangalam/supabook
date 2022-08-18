@@ -77,7 +77,7 @@ export default function CreatePostRoute() {
               addMediaFile={(mediaData) => setMedia(mediaData)}
               bucket="post"
             >
-              <Icon fontSize={"xl"} as={FiImage} color="green.400" />
+              <Icon fontSize={"xl"} as={FiImage} />
             </UploadMedia>
           </HStack>
           <Button

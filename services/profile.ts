@@ -11,12 +11,16 @@ export async function fetchProfileDetails(profileId: string) {
 }
 
 export async function changeProfilePic(profileId: string, avatar: any) {
+  console.log(avatar);
+  console.log(profileId);
   // fetch profile information from database
   const { data: profileData, error: profileErrr } = await supabase
     .from("profile")
     .select("avatar")
     .eq("id", profileId);
   if (profileErrr) throw profileErrr;
+
+  console.log(profileData);
 
   // remove older avatar from supaabase storage
   if (profileData?.length && profileData[0].avatar) {
@@ -25,12 +29,14 @@ export async function changeProfilePic(profileId: string, avatar: any) {
       .remove(profileData[0].avatar.path);
 
     if (avatarRemoveError) throw avatarRemoveError;
-
-    // update profile data with new avatar
-    const { data: updateProfileData, error: updateProfileError } =
-      await supabase.from("profile").update({ avatar }).eq("id", profileId);
-
-    if (updateProfileError) throw updateProfileError;
-    if (updateProfileData) return updateProfileData[0];
   }
+
+  // update profile data with new avatar
+  const { data: updateProfileData, error: updateProfileError } = await supabase
+    .from("profile")
+    .update({ avatar })
+    .eq("id", profileId);
+
+  if (updateProfileError) throw updateProfileError;
+  if (updateProfileData) return updateProfileData[0];
 }

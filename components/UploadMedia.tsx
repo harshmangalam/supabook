@@ -66,7 +66,7 @@ export default function UploadMedia({
         // get signed url of uploaded media
         const { signedURL, error: signedUrlError } = await supabase.storage
           .from(bucket)
-          .createSignedUrl(mediaPath, 60);
+          .createSignedUrl(mediaPath, 60 * 60 * 24 * 365);
 
         if (signedUrlError) {
           console.log(signedUrlError.message);

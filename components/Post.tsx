@@ -39,7 +39,7 @@ export default function Post({
     >
       <HStack justify={"space-between"} px={4} py={2}>
         <HStack spacing={4}>
-          <Avatar src={author.avatar_url} />
+          <Avatar src={author?.avatar?.url} />
           <VStack spacing={0} align="start">
             <Heading fontSize={"lg"}>{author.name}</Heading>
             <Text fontSize={"sm"}>{new Date(created_at).toDateString()}</Text>
@@ -58,11 +58,6 @@ export default function Post({
           <AiOutlineHeart size={16} />
           <Text fontSize={"sm"}>{18}</Text>
           <Text fontSize={"sm"}>Likes</Text>
-        </HStack>
-        <HStack px={4} py={4}>
-          <VscComment size={16} />
-          <Text fontSize={"sm"}>{18}</Text>
-          <Text fontSize={"sm"}>Comments</Text>
         </HStack>
       </HStack>
       <Divider />
@@ -84,11 +79,6 @@ export default function Post({
               size={"sm"}
               aria-label="Like"
               icon={<AiOutlineHeart size={20} />}
-            />
-            <IconButton
-              size={"sm"}
-              aria-label="Comment"
-              icon={<VscComment size={20} />}
             />
           </HStack>
         </>

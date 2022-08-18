@@ -66,7 +66,11 @@ export default function PostAction({ id, media }: Props) {
         variant="ghost"
       />
       <MenuList>
-        <MenuItem onClick={deletePost} icon={<AiOutlineDelete size={20} />}>
+        <MenuItem
+          color={"red.300"}
+          onClick={deletePost}
+          icon={<AiOutlineDelete size={20} />}
+        >
           Delete
         </MenuItem>
       </MenuList>
