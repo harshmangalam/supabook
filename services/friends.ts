@@ -51,3 +51,13 @@ export async function cancelFriendRequest(from: string, to: string) {
   if (error) throw error;
   if (data) return data;
 }
+
+export async function fetchFriendRequestReceived(profileId: string) {
+  const { data, error } = await supabase
+    .from("friend_request")
+    .select("to(id,name,avatar)")
+    .eq("to", profileId);
+
+  if (error) throw error;
+  if (data) return data?.map((user) => user.to);
+}
