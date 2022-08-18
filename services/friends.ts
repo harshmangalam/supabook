@@ -85,3 +85,53 @@ export async function acceptFriendRequest(from: string, to: string) {
   if (error) throw error;
   if (data) return data;
 }
+
+export async function fetchMyFriend(profileId: string) {
+  const { data, error } = await supabase
+    .from("friend")
+    .select("*, from(id,name,avatar),to(id,name,avatar)")
+    .eq("isFriend", true);
+
+  console.log(data);
+  if (error) throw error;
+  if (data)
+    return data
+      ?.filter((user) => user.from.id === profileId || user.to.id === profileId)
+      .map((user) => {
+        if (profileId === user.to.id) {
+          return user.from;
+        } else {
+          return user.to;
+        }
+      });
+}
+
+export async function unfriend(from: string, to: string) {
+  const { data: data1, error: error1 } = await supabase
+    .from("friend")
+    .delete()
+    .match({
+      from,
+      to,
+      isFriend: true,
+    });
+
+  if (error1) throw error1;
+
+  if (data1) {
+    if (data1.length === 0) {
+      const { data: data2, error: error2 } = await supabase
+        .from("friend")
+        .delete()
+        .match({
+          from: to,
+          to: from,
+          isFriend: true,
+        });
+
+      if (error2) throw error2;
+      return data2;
+    }
+    return data1;
+  }
+}
