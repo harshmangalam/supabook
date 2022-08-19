@@ -143,7 +143,7 @@ export default function ProfileLayout({ children, loading, error }: Props) {
               <Tag>{profile?.postsCount} Posts</Tag>
             </HStack>
           )}
-          {authContext?.user?.id === profile?.id && (
+          {/* {authContext?.user?.id === profile?.id && (
             <>
               {profileLoading ? (
                 <Skeleton
@@ -164,7 +164,7 @@ export default function ProfileLayout({ children, loading, error }: Props) {
                 </Button>
               )}
             </>
-          )}
+          )} */}
         </VStack>
       </Stack>
 

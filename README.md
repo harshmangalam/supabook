@@ -62,6 +62,8 @@
   - [ ] Edit information
   - [x] Update profile pic
   - [x] Authorize user can update profile pic and profile info
+  - [x] Friends count
+  - [x] Posts count
 
 - [x] Dark theme
 - [ ] Settings

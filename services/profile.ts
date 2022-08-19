@@ -20,9 +20,6 @@ export async function fetchProfileDetails(profileId: string) {
     (profile) => profile.from.id === profileId || profile.to.id === profileId
   ).length;
 
-  console.log(friendsData?.length);
-  console.log(friendsCount);
-
   if (error) throw error;
   if (profileDetail) {
     const data = { ...profileDetail[0], postsCount, friendsCount };
