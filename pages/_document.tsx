@@ -6,7 +6,12 @@ export default class Document extends NextDocument {
   render() {
     return (
       <Html lang="en">
-        <Head />
+        <Head>
+          <meta
+            name="description"
+            content="Social media web app build with Supabase and Nextjs"
+          />
+        </Head>
         <body>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
           <Main />
