@@ -42,6 +42,7 @@
   - [ ] Tag friends
   - [ ] Share live location
   - [ ] Bookmark post
+  - [x] Show author profile from post
 
 - Friends
   - [x] Show friends list
