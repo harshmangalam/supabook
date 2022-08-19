@@ -38,13 +38,15 @@ export default function Post({
       borderWidth={"2px"}
     >
       <HStack justify={"space-between"} px={4} py={2}>
-        <HStack spacing={4}>
-          <Avatar src={author?.avatar?.url} />
-          <VStack spacing={0} align="start">
-            <Heading fontSize={"lg"}>{author.name}</Heading>
-            <Text fontSize={"sm"}>{new Date(created_at).toDateString()}</Text>
-          </VStack>
-        </HStack>
+        <Link href={author?.id} passHref>
+          <HStack as="a" spacing={4}>
+            <Avatar src={author?.avatar?.url} />
+            <VStack spacing={0} align="start">
+              <Heading fontSize={"lg"}>{author.name}</Heading>
+              <Text fontSize={"sm"}>{new Date(created_at).toDateString()}</Text>
+            </VStack>
+          </HStack>
+        </Link>
 
         {authContext?.user?.id === author.id && (
           <PostAction id={id} media={media} />
