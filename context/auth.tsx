@@ -32,6 +32,8 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
           .select("id, user_id, name ,avatar")
           .eq("user_id", session?.user.id);
         setUser(data?.[0]);
+
+        if (router.pathname.includes("auth")) router.replace("/");
       }
     } catch (error) {
       console.log(error);
