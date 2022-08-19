@@ -17,6 +17,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { supabase } from "../../../utils/supabaseClient";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const schema = yup
   .object({
@@ -85,6 +86,9 @@ export default function AuthSignupRoute() {
   };
   return (
     <Container>
+      <Head>
+        <title>Signup</title>
+      </Head>
       <Box
         rounded={"lg"}
         bg={useColorModeValue("white", "gray.700")}

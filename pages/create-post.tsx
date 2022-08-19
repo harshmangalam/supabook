@@ -9,6 +9,7 @@ import {
   Textarea,
   useColorModeValue,
 } from "@chakra-ui/react";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { FiImage } from "react-icons/fi";
@@ -52,6 +53,9 @@ export default function CreatePostRoute() {
   };
   return (
     <Container>
+      <Head>
+        <title>Create Post</title>
+      </Head>
       <Box
         rounded={"lg"}
         bg={useColorModeValue("white", "gray.700")}

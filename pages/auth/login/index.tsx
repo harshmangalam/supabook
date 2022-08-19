@@ -9,10 +9,14 @@ import {
   HStack,
   SimpleGrid,
 } from "@chakra-ui/react";
+import Head from "next/head";
 import Link from "next/link";
 export default function AuthSigninRoute() {
   return (
     <Container>
+      <Head>
+        <title>Login</title>
+      </Head>
       <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
         <Stack align={"center"}>
           <Heading fontSize={"4xl"}>Login</Heading>

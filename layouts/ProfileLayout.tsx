@@ -15,12 +15,12 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
 import { BsFilePostFill } from "react-icons/bs";
 import { FaCamera, FaUserFriends } from "react-icons/fa";
-import { RiUserSettingsLine } from "react-icons/ri";
 import useSWR from "swr";
 import UploadMedia from "../components/UploadMedia";
 import { useAuthContext } from "../context/auth";
@@ -29,8 +29,14 @@ interface Props {
   children: ReactNode;
   loading?: boolean;
   error?: any;
+  title: string;
 }
-export default function ProfileLayout({ children, loading, error }: Props) {
+export default function ProfileLayout({
+  children,
+  loading,
+  error,
+  title,
+}: Props) {
   const router = useRouter();
   const authContext = useAuthContext();
 
@@ -59,6 +65,9 @@ export default function ProfileLayout({ children, loading, error }: Props) {
 
   return (
     <Container maxW={"container.md"}>
+      <Head>
+        <title>{`${authContext?.user?.name} |  ${title}`}</title>
+      </Head>
       {/* profile info section  */}
       <Stack
         direction={["column", "column", "row"]}

@@ -20,6 +20,7 @@ import * as yup from "yup";
 import { supabase } from "../../../utils/supabaseClient";
 import { useAuthContext } from "../../../context/auth";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 const schema = yup
   .object({
@@ -82,6 +83,9 @@ export default function AuthSigninSigninWithEmailRoute() {
   };
   return (
     <Container>
+      <Head>
+        <title>Login | Login with email</title>
+      </Head>
       <Box
         rounded={"lg"}
         bg={useColorModeValue("white", "gray.700")}

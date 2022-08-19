@@ -20,6 +20,7 @@ import * as yup from "yup";
 import { supabase } from "../../../utils/supabaseClient";
 import { BsArrowRight } from "react-icons/bs";
 import { useToast } from "@chakra-ui/react";
+import Head from "next/head";
 const schema = yup
   .object({
     email: yup.string().required().email(),
@@ -52,11 +53,6 @@ export default function SigninSigninWithMagicLinkRoute() {
         return;
       }
 
-      console.log("session", session);
-      console.log("provider", provider);
-      console.log("user", user);
-      console.log("url", url);
-
       setValue("email", "");
       toast({
         title: "Sign in",
@@ -76,6 +72,9 @@ export default function SigninSigninWithMagicLinkRoute() {
   };
   return (
     <Container>
+      <Head>
+        <title>Login | Login with magic link</title>
+      </Head>
       <Box
         rounded={"lg"}
         bg={useColorModeValue("white", "gray.700")}

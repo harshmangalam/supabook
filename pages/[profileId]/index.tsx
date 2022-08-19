@@ -13,7 +13,11 @@ export default function ProfileHome() {
   );
 
   return (
-    <ProfileLayout loading={!posts && !postsError} error={postsError}>
+    <ProfileLayout
+      title="Posts"
+      loading={!posts && !postsError}
+      error={postsError}
+    >
       {/* posts  */}
       <Container>
         <SimpleGrid spacing={4}>

@@ -12,6 +12,7 @@ import {
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { ReactNode } from "react";
@@ -26,11 +27,20 @@ interface Props {
   children: ReactNode;
   loading?: boolean;
   error?: any;
+  title: string;
 }
-export default function FriendsLayout({ children, loading, error }: Props) {
+export default function FriendsLayout({
+  children,
+  loading,
+  error,
+  title,
+}: Props) {
   const router = useRouter();
   return (
     <Container maxW={"container.xl"}>
+      <Head>
+        <title>{title}</title>
+      </Head>
       <Grid
         templateColumns={["repeat(1, 1fr)", "repeat(1, 1fr)", "repeat(6, 1fr)"]}
         gap={6}

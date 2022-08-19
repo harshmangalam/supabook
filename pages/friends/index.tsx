@@ -40,7 +40,11 @@ export default function FriendRoute() {
     }
   };
   return (
-    <FriendsLayout loading={!usersError && !users} error={usersError}>
+    <FriendsLayout
+      title="Friends | My Friends"
+      loading={!usersError && !users}
+      error={usersError}
+    >
       <SimpleGrid spacing={4} columns={[1, 2, 2, 3]}>
         {users?.length ? (
           users?.map((user) => (

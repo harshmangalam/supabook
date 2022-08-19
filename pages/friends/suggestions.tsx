@@ -41,6 +41,7 @@ export default function FriendsSuggestionsRoute() {
   };
   return (
     <FriendsLayout
+      title="Friends | Suggestions"
       loading={!friendsSuggestionData && !friendsSuggestionError}
       error={friendsSuggestionError}
     >

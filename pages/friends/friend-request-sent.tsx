@@ -45,7 +45,11 @@ export default function FriendRequestSentRoute() {
   };
 
   return (
-    <FriendsLayout loading={!usersError && !users} error={usersError}>
+    <FriendsLayout
+      title="Friends | Friend Request Sent"
+      loading={!usersError && !users}
+      error={usersError}
+    >
       <SimpleGrid spacing={4} columns={[1, 2, 2, 3]}>
         {users?.length ? (
           users?.map((user) => (
