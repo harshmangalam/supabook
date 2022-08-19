@@ -1,10 +1,5 @@
-import {
-  Box,
-  Heading,
-  Image,
-  useColorModeValue,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Heading, useColorModeValue, VStack } from "@chakra-ui/react";
+import Image from "next/image";
 
 export default function Friend({ id, name, avatar, children }) {
   return (
@@ -15,11 +10,11 @@ export default function Friend({ id, name, avatar, children }) {
     >
       <Image
         src={avatar?.url}
-        width={"full"}
-        h={"240px"}
-        roundedTop="md"
-        objectFit="cover"
-        roundedTopEnd={"md"}
+        height={240}
+        width={200}
+        alt={name}
+        loading="lazy"
+        layout="responsive"
       />
       <Heading p={4} fontSize={"md"}>
         {name}

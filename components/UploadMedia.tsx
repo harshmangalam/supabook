@@ -153,6 +153,7 @@ export default function UploadMedia({
                   objectFit={"cover"}
                   rounded="md"
                   shadow={"md"}
+                  alt={"Preview"}
                 />
                 <Box pos={"absolute"} top={2} right={2}>
                   <Tooltip label={"Remove Media"}>
