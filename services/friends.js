@@ -9,7 +9,7 @@ export async function fetchFriendSuggestion() {
   if (data) return data;
 }
 
-export async function fetchFriendRequestSent(profileId: string) {
+export async function fetchFriendRequestSent(profileId) {
   const { data, error } = await supabase
     .from("friend")
     .select("to(id,name,avatar)")
@@ -19,7 +19,7 @@ export async function fetchFriendRequestSent(profileId: string) {
   if (data) return data?.map((user) => user.to);
 }
 
-export async function sendFriendRequest(from: string, to: string) {
+export async function sendFriendRequest(from, to) {
   if (from === to)
     throw new Error("You cannot send friend request to yourself");
   const { data: userData, error: userError } = await supabase
@@ -39,7 +39,7 @@ export async function sendFriendRequest(from: string, to: string) {
   if (data) return data;
 }
 
-export async function cancelFriendRequest(from: string, to: string) {
+export async function cancelFriendRequest(from, to) {
   const { data, error } = await supabase.from("friend").delete().match({
     from,
     to,
@@ -49,7 +49,7 @@ export async function cancelFriendRequest(from: string, to: string) {
   if (data) return data;
 }
 
-export async function fetchFriendRequestReceived(profileId: string) {
+export async function fetchFriendRequestReceived(profileId) {
   const { data, error } = await supabase
     .from("friend")
     .select("from(id,name,avatar)")
@@ -61,7 +61,7 @@ export async function fetchFriendRequestReceived(profileId: string) {
   if (data) return data?.map((user) => user.from);
 }
 
-export async function ignoreFriendRequest(from: string, to: string) {
+export async function ignoreFriendRequest(from, to) {
   const { data, error } = await supabase.from("friend").delete().match({
     from,
     to,
@@ -73,7 +73,7 @@ export async function ignoreFriendRequest(from: string, to: string) {
   if (data) return data;
 }
 
-export async function acceptFriendRequest(from: string, to: string) {
+export async function acceptFriendRequest(from, to) {
   const { data, error } = await supabase
     .from("friend")
     .update({
@@ -88,7 +88,7 @@ export async function acceptFriendRequest(from: string, to: string) {
   if (data) return data;
 }
 
-export async function fetchMyFriend(profileId: string) {
+export async function fetchMyFriend(profileId) {
   const { data, error } = await supabase
     .from("friend")
     .select("*, from(id,name,avatar),to(id,name,avatar)")
@@ -106,7 +106,7 @@ export async function fetchMyFriend(profileId: string) {
       });
 }
 
-export async function unfriend(from: string, to: string) {
+export async function unfriend(from, to) {
   const { data: data1, error: error1 } = await supabase
     .from("friend")
     .delete()

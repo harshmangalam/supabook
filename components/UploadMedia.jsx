@@ -25,22 +25,15 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { supabase } from "../utils/supabaseClient";
 import shortid from "shortid";
 
-interface Props {
-  children: React.ReactElement;
-  addMediaFile: (media: any) => void;
-  bucket: string;
-  tooltip: string;
-}
-
 export default function UploadMedia({
   children,
   addMediaFile,
   bucket,
   tooltip,
-}: Props) {
-  const fileRef = React.useRef<HTMLInputElement | null>(null);
+}) {
+  const fileRef = (React.useRef < HTMLInputElement) | (null > null);
   // relative file path for media in supabase storage
-  const [mediaPath, setMediaPath] = React.useState<string>("");
+  const [mediaPath, setMediaPath] = React.useState < string > "";
   // signed media url for preview
   const [mediaUrl, setMediaUrl] = React.useState("");
   const [uploading, setUploading] = React.useState(false);
@@ -51,13 +44,13 @@ export default function UploadMedia({
   const handleOpenFile = () => {
     fileRef.current?.click();
   };
-  const handleFileChange = async (e: any) => {
+  const handleFileChange = async (e) => {
     setUploading(true);
     try {
       // file path where media will upload
       const mediaPath = `public/${shortid()}.jpg`;
       setMediaPath(mediaPath);
-      const file = (e.target as HTMLInputElement).files?.[0] as File;
+      const file = e.target.files?.[0];
       // uploa file in supabase
       const { data: uploadData, error: uploadError } = await supabase.storage
         .from(bucket)

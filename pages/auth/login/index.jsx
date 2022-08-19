@@ -6,7 +6,6 @@ import {
   useColorModeValue,
   Container,
   Button,
-  HStack,
   SimpleGrid,
 } from "@chakra-ui/react";
 import Head from "next/head";

@@ -18,25 +18,19 @@ import {
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ReactNode } from "react";
 import { BsFilePostFill } from "react-icons/bs";
 import { FaCamera, FaUserFriends } from "react-icons/fa";
 import useSWR from "swr";
 import UploadMedia from "../components/UploadMedia";
 import { useAuthContext } from "../context/auth";
 import { changeProfilePic, fetchProfileDetails } from "../services/profile";
-interface Props {
-  children: ReactNode;
-  loading?: boolean;
-  error?: any;
-  title: string;
-}
+
 export default function ProfileLayout({
   children,
   loading,
   error,
   title,
-}: Props) {
+}) {
   const router = useRouter();
   const authContext = useAuthContext();
 
@@ -45,15 +39,15 @@ export default function ProfileLayout({
     error: profileError,
     mutate: profileMutate,
   } = useSWR(`/${router.query.profileId}`, () =>
-    fetchProfileDetails(router.query.profileId as string)
+    fetchProfileDetails(router.query.profileId)
   );
 
   const profileLoading = !profile && !profileError;
 
-  const handleUpdateProfilePic = async (avatar: any) => {
+  const handleUpdateProfilePic = async (avatar) => {
     try {
       const data = await changeProfilePic(
-        router.query.profileId as string,
+        router.query.profileId,
         avatar
       );
       // revalidate profile avatar after update

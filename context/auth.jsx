@@ -2,22 +2,15 @@ import { useToast } from "@chakra-ui/react";
 import { useRouter } from "next/router";
 import {
   createContext,
-  ReactNode,
   useContext,
   useEffect,
   useState,
 } from "react";
 import { supabase } from "../utils/supabaseClient";
 
-interface IContext {
-  user: any;
-  isAuthenticating: boolean;
-  logout: () => void;
-  loadUserSession: () => void;
-}
-const AuthContext = createContext<IContext | null>(null);
+const AuthContext = createContext(null);
 
-export default function AuthProvider({ children }: { children: ReactNode }) {
+export default function AuthProvider({ children }) {
   const router = useRouter();
   const toast = useToast();
   const [user, setUser] = useState<any>(null);

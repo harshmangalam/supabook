@@ -15,7 +15,6 @@ import {
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
-import { ReactNode } from "react";
 import {
   RiUserFollowLine,
   RiUserLocationLine,
@@ -23,18 +22,13 @@ import {
   RiUserReceived2Line,
 } from "react-icons/ri";
 
-interface Props {
-  children: ReactNode;
-  loading?: boolean;
-  error?: any;
-  title: string;
-}
+
 export default function FriendsLayout({
   children,
   loading,
   error,
   title,
-}: Props) {
+}) {
   const router = useRouter();
   return (
     <Container maxW={"container.xl"}>

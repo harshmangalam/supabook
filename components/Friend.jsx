@@ -1,14 +1,7 @@
 import { Box, Heading, useColorModeValue, VStack } from "@chakra-ui/react";
 import Image from "next/image";
-import { ReactElement } from "react";
 
-interface Props {
-  id: string;
-  name: string;
-  avatar: any;
-  children: ReactElement;
-}
-export default function Friend({ id, name, avatar, children }: Props) {
+export default function Friend({ id, name, avatar, children }) {
   return (
     <Box
       bg={useColorModeValue("white", "gray.700")}

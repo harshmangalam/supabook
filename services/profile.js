@@ -1,6 +1,6 @@
 import { supabase } from "../utils/supabaseClient";
 
-export async function fetchProfileDetails(profileId: string) {
+export async function fetchProfileDetails(profileId) {
   const { data: profileDetail, error } = await supabase
     .from("profile")
     .select("*")
@@ -27,7 +27,7 @@ export async function fetchProfileDetails(profileId: string) {
   }
 }
 
-export async function changeProfilePic(profileId: string, avatar: any) {
+export async function changeProfilePic(profileId, avatar) {
   console.log(avatar);
   console.log(profileId);
   // fetch profile information from database

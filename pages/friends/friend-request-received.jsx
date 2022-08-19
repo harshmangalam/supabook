@@ -10,8 +10,8 @@ import {
   ignoreFriendRequest,
 } from "../../services/friends";
 export default function FriendRequestSentRoute() {
-  const [ignoring, setIgnoring] = useState<string>();
-  const [accepting, setAccepting] = useState<string>();
+  const [ignoring, setIgnoring] = useState();
+  const [accepting, setAccepting] = useState();
   const authContext = useAuthContext();
   const toast = useToast();
 
@@ -23,7 +23,7 @@ export default function FriendRequestSentRoute() {
     fetchFriendRequestReceived(authContext?.user?.id)
   );
 
-  const handleIgnoreRequest = async (from: string) => {
+  const handleIgnoreRequest = async (from) => {
     setIgnoring(from);
     try {
       await ignoreFriendRequest(from, authContext?.user?.id);
@@ -33,11 +33,11 @@ export default function FriendRequestSentRoute() {
         status: "success",
       });
       mutate(["/friends/friend-request-received"]);
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
       toast({
         title: "Friend Request",
-        description: error?.message as string,
+        description: error?.message,
         status: "error",
       });
     } finally {
@@ -45,7 +45,7 @@ export default function FriendRequestSentRoute() {
     }
   };
 
-  const handleAcceptRequest = async (from: string) => {
+  const handleAcceptRequest = async (from) => {
     setAccepting(from);
     try {
       await acceptFriendRequest(from, authContext?.user?.id);
@@ -56,11 +56,11 @@ export default function FriendRequestSentRoute() {
         status: "success",
       });
       mutate(["/friends/friend-request-received"]);
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
       toast({
         title: "Friend Request",
-        description: error?.message as string,
+        description: error?.message,
         status: "error",
       });
     } finally {

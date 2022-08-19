@@ -10,7 +10,7 @@ import {
   useColorModeValue,
   Container,
   FormErrorMessage,
-  useToast,
+  FormHelperText,
   VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -18,65 +18,48 @@ import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { supabase } from "../../../utils/supabaseClient";
-import { useAuthContext } from "../../../context/auth";
-import { useRouter } from "next/router";
+import { BsArrowRight } from "react-icons/bs";
+import { useToast } from "@chakra-ui/react";
 import Head from "next/head";
-
 const schema = yup
   .object({
     email: yup.string().required().email(),
-    password: yup.string().required().min(6),
   })
   .required();
 
-export default function AuthSigninSigninWithEmailRoute() {
-  const router = useRouter();
-  const authContext = useAuthContext();
+export default function SigninSigninWithMagicLinkRoute() {
   const toast = useToast();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-    reset,
-  } = useForm<{ email: string; password: string }>({
-    resolver: yupResolver(schema),
-  });
+    setValue,
+  } = useForm({ resolver: yupResolver(schema) });
 
-  const onSubmit = async ({
-    email,
-    password,
-  }: {
-    email: string;
-    password: string;
-  }) => {
+  const onSubmit = async ({ email }) => {
     try {
-      const { user, error } = await supabase.auth.signIn({
-        email,
-        password,
-      });
-
-      if (user) {
-        authContext?.loadUserSession();
-        toast({
-          title: "Authentication",
-          description: "You have logged in successfully",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
+      const { error, session, user, provider, url } =
+        await supabase.auth.signIn({
+          email,
         });
-        router.replace("/");
-      }
 
       if (error) {
         toast({
-          title: "Authentication Error",
-          description: error.message,
+          title: "Sign in",
+          description: error?.message,
           status: "error",
-          duration: 5000,
           isClosable: true,
         });
+        return;
       }
-      reset({ email: "", password: "" });
+
+      setValue("email", "");
+      toast({
+        title: "Sign in",
+        description: "Magin link sent to your email successfully",
+        status: "success",
+        isClosable: true,
+      });
     } catch (error) {
       console.log(error);
     }
@@ -84,7 +67,7 @@ export default function AuthSigninSigninWithEmailRoute() {
   return (
     <Container>
       <Head>
-        <title>Login | Login with email</title>
+        <title>Login | Login with magic link</title>
       </Head>
       <Box
         rounded={"lg"}
@@ -97,7 +80,7 @@ export default function AuthSigninSigninWithEmailRoute() {
           <Heading fontSize={"4xl"} textAlign="center">
             Login
           </Heading>
-          <Text>Login with email and password</Text>
+          <Text>Login with magic link</Text>
         </VStack>
         <Stack
           as="form"
@@ -109,20 +92,22 @@ export default function AuthSigninSigninWithEmailRoute() {
           <FormControl id="email" isInvalid={Boolean(errors.email)}>
             <FormLabel>Email address</FormLabel>
             <Input type="email" {...register("email")} />
-            {errors?.email && (
+            {errors?.email ? (
               <FormErrorMessage>{errors.email.message}</FormErrorMessage>
-            )}
-          </FormControl>
-          <FormControl id="password" isInvalid={Boolean(errors.password)}>
-            <FormLabel>Password</FormLabel>
-            <Input type="password" {...register("password")} />
-            {errors?.password && (
-              <FormErrorMessage>{errors.password.message}</FormErrorMessage>
+            ) : (
+              <FormHelperText>
+                Magic link will be sent to your email address
+              </FormHelperText>
             )}
           </FormControl>
 
-          <Button isLoading={isSubmitting} type="submit" colorScheme="purple">
-            Login
+          <Button
+            isLoading={isSubmitting}
+            rightIcon={<BsArrowRight size={20} />}
+            type="submit"
+            colorScheme="pink"
+          >
+            Continue
           </Button>
         </Stack>
         <Link href={"/auth/login"} passHref>

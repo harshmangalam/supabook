@@ -13,11 +13,7 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { BiDotsHorizontalRounded } from "react-icons/bi";
 import { supabase } from "../../utils/supabaseClient";
 
-interface Props {
-  id: string;
-  media: any;
-}
-export default function PostAction({ id, media }: Props) {
+export default function PostAction({ id, media }) {
   const router = useRouter();
   const toast = useToast();
   const [loading, setLoading] = useState("");

@@ -9,7 +9,7 @@ import {
   sendFriendRequest,
 } from "../../services/friends";
 export default function FriendsSuggestionsRoute() {
-  const [loading, setLoading] = useState<string>();
+  const [loading, setLoading] = useState();
   const authContext = useAuthContext();
   const toast = useToast();
 
@@ -18,7 +18,7 @@ export default function FriendsSuggestionsRoute() {
     error: friendsSuggestionError,
     mutate: friendsSuggestionMutation,
   } = useSWR("/friends/suggestions", fetchFriendSuggestion);
-  const handleSendRequest = async (to: string) => {
+  const handleSendRequest = async (to) => {
     setLoading(to);
     try {
       await sendFriendRequest(authContext?.user.id, to);
@@ -28,11 +28,11 @@ export default function FriendsSuggestionsRoute() {
         status: "success",
       });
       friendsSuggestionMutation(["/friends/suggestions"]);
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
       toast({
         title: "Friend Request",
-        description: error?.message as string,
+        description: error?.message,
         status: "error",
       });
     } finally {

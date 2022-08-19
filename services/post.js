@@ -1,6 +1,6 @@
 import { supabase } from "../utils/supabaseClient";
 
-export async function fetchUserPosts(profileId: string) {
+export async function fetchUserPosts(profileId) {
   const { data, error } = await supabase
     .from("post")
     .select(`*,author(id,name,avatar)`)

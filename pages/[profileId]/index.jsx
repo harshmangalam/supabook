@@ -9,7 +9,7 @@ export default function ProfileHome() {
   const router = useRouter();
   const { data: posts, error: postsError } = useSWR(
     `/${router.query.profileId}/posts`,
-    () => fetchUserPosts(router.query.profileId as string)
+    () => fetchUserPosts(router.query.profileId)
   );
 
   return (
@@ -22,7 +22,7 @@ export default function ProfileHome() {
       <Container>
         <SimpleGrid spacing={4}>
           {posts?.length ? (
-            posts.map((post: any) => <Post key={post.id} {...post} />)
+            posts.map((post) => <Post key={post.id} {...post} />)
           ) : (
             <Center>
               <Text>No Posts</Text>

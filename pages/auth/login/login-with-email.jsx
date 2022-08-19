@@ -6,69 +6,62 @@ import {
   Stack,
   Button,
   Heading,
+  Text,
   useColorModeValue,
   Container,
   FormErrorMessage,
   useToast,
+  VStack,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { supabase } from "../../../utils/supabaseClient";
+import { useAuthContext } from "../../../context/auth";
 import { useRouter } from "next/router";
 import Head from "next/head";
 
 const schema = yup
   .object({
-    name: yup.string().required(),
     email: yup.string().required().email(),
     password: yup.string().required().min(6),
   })
   .required();
 
-export default function AuthSignupRoute() {
+export default function AuthSigninSigninWithEmailRoute() {
   const router = useRouter();
+  const authContext = useAuthContext();
   const toast = useToast();
   const {
     handleSubmit,
     register,
     formState: { errors, isSubmitting },
-  } = useForm<{ name: string; email: string; password: string }>({
+    reset,
+  } = useForm({
     resolver: yupResolver(schema),
   });
 
   const onSubmit = async ({
-    name,
     email,
     password,
-  }: {
-    name: string;
-    email: string;
-    password: string;
   }) => {
     try {
-      const { user, error } = await supabase.auth.signUp({
+      const { user, error } = await supabase.auth.signIn({
         email,
         password,
       });
 
       if (user) {
-        await supabase.from("profile").insert([
-          {
-            name,
-            user_info: user,
-            user_id: user.id,
-          },
-        ]);
+        authContext?.loadUserSession();
         toast({
           title: "Authentication",
-          description: "Your account created successfully",
+          description: "You have logged in successfully",
           status: "success",
           duration: 5000,
           isClosable: true,
         });
-        router.push("/auth/login/login-with-email");
+        router.replace("/");
       }
 
       if (error) {
@@ -80,6 +73,7 @@ export default function AuthSignupRoute() {
           isClosable: true,
         });
       }
+      reset({ email: "", password: "" });
     } catch (error) {
       console.log(error);
     }
@@ -87,7 +81,7 @@ export default function AuthSignupRoute() {
   return (
     <Container>
       <Head>
-        <title>Signup</title>
+        <title>Login | Login with email</title>
       </Head>
       <Box
         rounded={"lg"}
@@ -96,9 +90,12 @@ export default function AuthSignupRoute() {
         p={8}
         mt={4}
       >
-        <Heading fontSize={"4xl"} textAlign="center">
-          Sign up
-        </Heading>
+        <VStack>
+          <Heading fontSize={"4xl"} textAlign="center">
+            Login
+          </Heading>
+          <Text>Login with email and password</Text>
+        </VStack>
         <Stack
           as="form"
           onSubmit={handleSubmit(onSubmit)}
@@ -106,13 +103,6 @@ export default function AuthSignupRoute() {
           mt={8}
           mb={6}
         >
-          <FormControl id="name" isInvalid={Boolean(errors.name)}>
-            <FormLabel>Name</FormLabel>
-            <Input type="text" {...register("name")} />
-            {errors?.name && (
-              <FormErrorMessage>{errors.name.message}</FormErrorMessage>
-            )}
-          </FormControl>
           <FormControl id="email" isInvalid={Boolean(errors.email)}>
             <FormLabel>Email address</FormLabel>
             <Input type="email" {...register("email")} />
@@ -128,13 +118,13 @@ export default function AuthSignupRoute() {
             )}
           </FormControl>
 
-          <Button isLoading={isSubmitting} type="submit" colorScheme="green">
-            Sign up
+          <Button isLoading={isSubmitting} type="submit" colorScheme="purple">
+            Login
           </Button>
         </Stack>
         <Link href={"/auth/login"} passHref>
           <Button as="a" variant={"link"} colorScheme="twitter" w="full">
-            Login with existing account
+            View other login options
           </Button>
         </Link>
       </Box>

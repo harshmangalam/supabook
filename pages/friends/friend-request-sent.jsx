@@ -9,7 +9,7 @@ import {
   fetchFriendRequestSent,
 } from "../../services/friends";
 export default function FriendRequestSentRoute() {
-  const [loading, setLoading] = useState<string>();
+  const [loading, setLoading] = useState();
   const authContext = useAuthContext();
   const toast = useToast();
 
@@ -21,7 +21,7 @@ export default function FriendRequestSentRoute() {
     fetchFriendRequestSent(authContext?.user?.id)
   );
 
-  const handleCancelRequest = async (to: string) => {
+  const handleCancelRequest = async (to) => {
     setLoading(to);
     try {
       const data = await cancelFriendRequest(authContext?.user?.id, to);
@@ -32,11 +32,11 @@ export default function FriendRequestSentRoute() {
         status: "success",
       });
       mutate(["/friends/friend-request-sent"]);
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
       toast({
         title: "Friend Request",
-        description: error?.message as string,
+        description: error?.message,
         status: "error",
       });
     } finally {

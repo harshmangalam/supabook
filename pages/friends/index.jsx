@@ -6,7 +6,7 @@ import { useAuthContext } from "../../context/auth";
 import FriendsLayout from "../../layouts/FriendsLayout";
 import { fetchMyFriend, unfriend } from "../../services/friends";
 export default function FriendRoute() {
-  const [loading, setLoading] = useState<string>();
+  const [loading, setLoading] = useState();
   const authContext = useAuthContext();
   const toast = useToast();
 
@@ -16,7 +16,7 @@ export default function FriendRoute() {
     error: usersError,
   } = useSWR("/friends", () => fetchMyFriend(authContext?.user?.id));
 
-  const handleUnfriend = async (to: string) => {
+  const handleUnfriend = async (to) => {
     setLoading(to);
     try {
       await unfriend(authContext?.user?.id, to);
@@ -27,11 +27,11 @@ export default function FriendRoute() {
         isClosable: true,
       });
       mutate(["/friends"]);
-    } catch (error: any) {
+    } catch (error) {
       console.log(error);
       toast({
         title: "Friend",
-        description: error?.message as string,
+        description: error?.message,
         status: "error",
         isClosable: true,
       });

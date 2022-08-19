@@ -15,20 +15,8 @@ import { VscComment } from "react-icons/vsc";
 import { useAuthContext } from "../context/auth";
 import PostAction from "./Post/PostAction";
 import Image from "next/image";
-interface Props {
-  id: string;
-  created_at: string;
-  content: string;
-  media: any;
-  author: any;
-}
-export default function Post({
-  id,
-  created_at,
-  content,
-  media,
-  author,
-}: Props) {
+
+export default function Post({ id, created_at, content, media, author }) {
   const authContext = useAuthContext();
   return (
     <Box
