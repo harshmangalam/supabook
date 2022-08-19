@@ -31,9 +31,9 @@ export default function UploadMedia({
   bucket,
   tooltip,
 }) {
-  const fileRef = (React.useRef < HTMLInputElement) | (null > null);
+  const fileRef = React.useRef();
   // relative file path for media in supabase storage
-  const [mediaPath, setMediaPath] = React.useState < string > "";
+  const [mediaPath, setMediaPath] = React.useState("");
   // signed media url for preview
   const [mediaUrl, setMediaUrl] = React.useState("");
   const [uploading, setUploading] = React.useState(false);

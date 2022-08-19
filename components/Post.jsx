@@ -45,9 +45,9 @@ export default function Post({ id, created_at, content, media, author }) {
         <Image
           alt={author?.name}
           src={media.url}
-          width="300px"
-          height={"400px"}
           loading="lazy"
+          width={500}
+          height={400}
           layout="responsive"
         />
       )}
