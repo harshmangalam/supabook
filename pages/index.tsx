@@ -3,7 +3,11 @@ import Head from "next/head";
 import Post from "../components/Post";
 import { supabase } from "../utils/supabaseClient";
 
-export default function Home({ posts }) {
+interface Props {
+  posts: any[];
+}
+
+export default function Home({ posts }: Props) {
   return (
     <Container>
       <Head>
