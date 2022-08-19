@@ -33,11 +33,11 @@ export default function FriendRequestSentRoute() {
         status: "success",
       });
       mutate(["/friends/friend-request-received"]);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       toast({
         title: "Friend Request",
-        description: error?.message,
+        description: error?.message as string,
         status: "error",
       });
     } finally {
@@ -56,11 +56,11 @@ export default function FriendRequestSentRoute() {
         status: "success",
       });
       mutate(["/friends/friend-request-received"]);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       toast({
         title: "Friend Request",
-        description: error?.message,
+        description: error?.message as string,
         status: "error",
       });
     } finally {

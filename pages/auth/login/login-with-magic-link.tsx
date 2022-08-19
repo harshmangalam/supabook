@@ -62,12 +62,6 @@ export default function SigninSigninWithMagicLinkRoute() {
       });
     } catch (error) {
       console.log(error);
-      toast({
-        title: "Sign in",
-        description: error?.message,
-        status: "error",
-        isClosable: true,
-      });
     }
   };
   return (

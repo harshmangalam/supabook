@@ -28,11 +28,11 @@ export default function FriendsSuggestionsRoute() {
         status: "success",
       });
       friendsSuggestionMutation(["/friends/suggestions"]);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       toast({
         title: "Friend Request",
-        description: error?.message,
+        description: error?.message as string,
         status: "error",
       });
     } finally {

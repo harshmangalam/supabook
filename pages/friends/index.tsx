@@ -27,11 +27,11 @@ export default function FriendRoute() {
         isClosable: true,
       });
       mutate(["/friends"]);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
       toast({
         title: "Friend",
-        description: error?.message,
+        description: error?.message as string,
         status: "error",
         isClosable: true,
       });
