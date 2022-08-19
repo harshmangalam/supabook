@@ -1,4 +1,4 @@
-import { Button, SimpleGrid, useToast } from "@chakra-ui/react";
+import { Button, Center, SimpleGrid, Text, useToast } from "@chakra-ui/react";
 import { useState } from "react";
 import useSWR from "swr";
 import Friend from "../../components/Friend";
@@ -41,9 +41,9 @@ export default function FriendRoute() {
   };
   return (
     <ProfileLayout loading={!usersError && !users} error={usersError}>
-      <SimpleGrid spacing={4} columns={[1, 2, 2, 3]}>
-        {users?.length ? (
-          users?.map((user) => (
+      {users?.length ? (
+        <SimpleGrid spacing={4} columns={[1, 2, 2, 3]}>
+          {users?.map((user) => (
             <Friend {...user} key={user.id}>
               <Button
                 isLoading={user.id === loading}
@@ -54,11 +54,13 @@ export default function FriendRoute() {
                 Unfriend
               </Button>
             </Friend>
-          ))
-        ) : (
-          <p>No Friends</p>
-        )}
-      </SimpleGrid>
+          ))}
+        </SimpleGrid>
+      ) : (
+        <Center>
+          <Text>No Friends</Text>
+        </Center>
+      )}
     </ProfileLayout>
   );
 }
