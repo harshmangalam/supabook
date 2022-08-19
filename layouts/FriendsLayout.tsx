@@ -1,9 +1,14 @@
 import {
+  Box,
   Button,
+  Center,
   Container,
   Grid,
   GridItem,
   Icon,
+  SimpleGrid,
+  Skeleton,
+  Text,
   useColorModeValue,
   VStack,
 } from "@chakra-ui/react";
@@ -54,8 +59,22 @@ export default function FriendsLayout({ children, loading, error }: Props) {
           </VStack>
         </GridItem>
         <GridItem colSpan={[1, 1, 4]}>
-          {loading && <p>Loading...</p>}
-          {error && <p>Error...</p>}
+          {loading && (
+            <SimpleGrid columns={3} spacing={4}>
+              {[...new Array(3)].map((_, i) => (
+                <Box w="full">
+                  <Skeleton w={"full"} h={"xs"} key={i}></Skeleton>
+                  <Skeleton mt={2} w="full" h={"16px"} />
+                  <Skeleton mt={6} w="full" h={"32px"} />
+                </Box>
+              ))}
+            </SimpleGrid>
+          )}
+          {error && (
+            <Center>
+              <Text>Error...</Text>
+            </Center>
+          )}
           {!loading && !error && children}
         </GridItem>
       </Grid>
