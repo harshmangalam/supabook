@@ -40,7 +40,6 @@ export async function sendFriendRequest(from: string, to: string) {
 }
 
 export async function cancelFriendRequest(from: string, to: string) {
-  console.log(from, to);
   const { data, error } = await supabase.from("friend").delete().match({
     from,
     to,
@@ -54,7 +53,10 @@ export async function fetchFriendRequestReceived(profileId: string) {
   const { data, error } = await supabase
     .from("friend")
     .select("from(id,name,avatar)")
-    .eq("to", profileId);
+    .match({
+      isFriend: false,
+      to: profileId,
+    });
   if (error) throw error;
   if (data) return data?.map((user) => user.from);
 }
@@ -91,8 +93,6 @@ export async function fetchMyFriend(profileId: string) {
     .from("friend")
     .select("*, from(id,name,avatar),to(id,name,avatar)")
     .eq("isFriend", true);
-
-  console.log(data);
   if (error) throw error;
   if (data)
     return data

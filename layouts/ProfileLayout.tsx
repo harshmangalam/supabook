@@ -51,7 +51,7 @@ export default function ProfileLayout({ children, loading, error }: Props) {
         avatar
       );
       // revalidate profile avatar after update
-      profileMutate(`/${router.query.profileId}`);
+      profileMutate([`/${router.query.profileId}`]);
     } catch (error) {
       console.log(error);
     }
@@ -107,7 +107,7 @@ export default function ProfileLayout({ children, loading, error }: Props) {
               height={"20px"}
             />
           ) : (
-            <Heading>{profile.name}</Heading>
+            <Heading>{profile?.name}</Heading>
           )}
           {profileLoading ? (
             <Skeleton
@@ -139,8 +139,8 @@ export default function ProfileLayout({ children, loading, error }: Props) {
             </HStack>
           ) : (
             <HStack>
-              <Tag>23 Friends</Tag>
-              <Tag>18 Posts</Tag>
+              <Tag>{profile?.friendsCount} Friends</Tag>
+              <Tag>{profile?.postsCount} Posts</Tag>
             </HStack>
           )}
           {authContext?.user?.id === profile?.id && (

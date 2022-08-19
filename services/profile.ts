@@ -1,13 +1,33 @@
 import { supabase } from "../utils/supabaseClient";
 
 export async function fetchProfileDetails(profileId: string) {
-  const { data, error } = await supabase
+  const { data: profileDetail, error } = await supabase
     .from("profile")
     .select("*")
     .eq("id", profileId);
 
+  const { count: postsCount } = await supabase
+    .from("post")
+    .select("id", { count: "exact" })
+    .eq("author", profileId);
+
+  const { data: friendsData } = await supabase
+    .from("friend")
+    .select("from(id), to(id)")
+    .match({ isFriend: true });
+
+  const friendsCount = friendsData?.filter(
+    (profile) => profile.from.id === profileId || profile.to.id === profileId
+  ).length;
+
+  console.log(friendsData?.length);
+  console.log(friendsCount);
+
   if (error) throw error;
-  if (data) return data[0];
+  if (profileDetail) {
+    const data = { ...profileDetail[0], postsCount, friendsCount };
+    return data;
+  }
 }
 
 export async function changeProfilePic(profileId: string, avatar: any) {
