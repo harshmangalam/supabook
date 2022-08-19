@@ -61,6 +61,7 @@
   - [x] Posts information
   - [ ] Edit information
   - [x] Update profile pic
+  - [x] Authorize user can update profile pic and profile info
 
 - [x] Dark theme
 - [ ] Settings

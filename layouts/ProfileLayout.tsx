@@ -19,6 +19,7 @@ import { FaCamera, FaUserFriends } from "react-icons/fa";
 import { RiUserSettingsLine } from "react-icons/ri";
 import useSWR from "swr";
 import UploadMedia from "../components/UploadMedia";
+import { useAuthContext } from "../context/auth";
 import { changeProfilePic, fetchProfileDetails } from "../services/profile";
 interface Props {
   children: ReactNode;
@@ -27,6 +28,7 @@ interface Props {
 }
 export default function ProfileLayout({ children, loading, error }: Props) {
   const router = useRouter();
+  const authContext = useAuthContext();
 
   const {
     data: profile,
@@ -68,15 +70,17 @@ export default function ProfileLayout({ children, loading, error }: Props) {
         {/* avatar section  */}
         <Box pos="relative">
           <Avatar src={profile?.avatar?.url} w={"200px"} h={"200px"} />
-          <Box pos={"absolute"} right={0} bottom={4}>
-            <UploadMedia
-              bucket="avatar"
-              tooltip="Change profile pic"
-              addMediaFile={(avatar) => handleUpdateProfilePic(avatar)}
-            >
-              <Icon as={FaCamera} fontSize="lg" />
-            </UploadMedia>
-          </Box>
+          {authContext?.user?.id === profile?.id && (
+            <Box pos={"absolute"} right={0} bottom={4}>
+              <UploadMedia
+                bucket="avatar"
+                tooltip="Change profile pic"
+                addMediaFile={(avatar) => handleUpdateProfilePic(avatar)}
+              >
+                <Icon as={FaCamera} fontSize="lg" />
+              </UploadMedia>
+            </Box>
+          )}
         </Box>
         {/* content section  */}
         <VStack align={["center", "center", "start"]} spacing={2}>
@@ -90,14 +94,16 @@ export default function ProfileLayout({ children, loading, error }: Props) {
             <Tag>23 Friends</Tag>
             <Tag>18 Posts</Tag>
           </HStack>
-          <Button
-            leftIcon={<RiUserSettingsLine size={18} />}
-            size="sm"
-            rounded="full"
-            colorScheme="green"
-          >
-            Edit Profile
-          </Button>
+          {authContext?.user?.id === profile?.id && (
+            <Button
+              leftIcon={<RiUserSettingsLine size={18} />}
+              size="sm"
+              rounded="full"
+              colorScheme="green"
+            >
+              Edit Profile
+            </Button>
+          )}
         </VStack>
       </Stack>
 
