@@ -34,6 +34,10 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
         setUser(data?.[0]);
 
         if (router.pathname.includes("auth")) router.replace("/");
+      } else {
+        if (protectedRoutes.includes(router.pathname)) {
+          router.replace("/auth");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -80,3 +84,5 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
 }
 
 export const useAuthContext = () => useContext(AuthContext);
+
+const protectedRoutes = ["/create-post", "/friends"];
