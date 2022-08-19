@@ -27,6 +27,7 @@
       - [ ] Login with Spotify
       - [ ] Login with Apple
   - [ ] Password reset
+  - [x] Protected routes
 
 - Post
 
