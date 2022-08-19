@@ -37,27 +37,41 @@ export default function SigninSigninWithMagicLinkRoute() {
 
   const onSubmit = async ({ email }: { email: string }) => {
     try {
-      await supabase.auth.signUp(
-        {
+      const { error, session, user, provider, url } =
+        await supabase.auth.signIn({
           email,
-        },
-        {
-          data: {
-            handler: email.split("@")[0],
-          },
-        }
-      );
+        });
+
+      if (error) {
+        toast({
+          title: "Sign in",
+          description: error?.message,
+          status: "error",
+          isClosable: true,
+        });
+        return;
+      }
+
+      console.log("session", session);
+      console.log("provider", provider);
+      console.log("user", user);
+      console.log("url", url);
 
       setValue("email", "");
       toast({
         title: "Sign in",
         description: "Magin link sent to your email successfully",
         status: "success",
-        duration: 5000,
         isClosable: true,
       });
     } catch (error) {
       console.log(error);
+      toast({
+        title: "Sign in",
+        description: error?.message,
+        status: "error",
+        isClosable: true,
+      });
     }
   };
   return (

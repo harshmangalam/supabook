@@ -21,8 +21,6 @@ import ThemeMode from "./ThemeMode";
 export default function Navbar() {
   const router = useRouter();
   const authContext = useAuthContext();
-
-  console.log(router.pathname);
   return (
     <Flex
       as="nav"
