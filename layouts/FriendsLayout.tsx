@@ -60,7 +60,7 @@ export default function FriendsLayout({ children, loading, error }: Props) {
         </GridItem>
         <GridItem colSpan={[1, 1, 4]}>
           {loading && (
-            <SimpleGrid columns={3} spacing={4}>
+            <SimpleGrid columns={[1, 1, 2, 3]} spacing={4}>
               {[...new Array(3)].map((_, i) => (
                 <Box w="full">
                   <Skeleton w={"full"} h={"xs"} key={i}></Skeleton>
@@ -75,7 +75,7 @@ export default function FriendsLayout({ children, loading, error }: Props) {
               <Text>Error...</Text>
             </Center>
           )}
-          {!loading && !error && children}
+          {!loading && !error && <Box>{children}</Box>}
         </GridItem>
       </Grid>
     </Container>
