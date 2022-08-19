@@ -1,4 +1,4 @@
-import { Container, SimpleGrid } from "@chakra-ui/react";
+import { Center, Container, SimpleGrid, Text } from "@chakra-ui/react";
 import Post from "../../components/Post";
 import ProfileLayout from "../../layouts/ProfileLayout";
 import { supabase } from "../../utils/supabaseClient";
@@ -9,9 +9,13 @@ export default function Home({ posts }) {
       {/* posts  */}
       <Container>
         <SimpleGrid spacing={4}>
-          {posts.map((post) => (
+          {posts?.length ? .map((post) => (
             <Post key={post.id} {...post} />
-          ))}
+          )):(
+            <Center>
+              <Text>No Posts</Text>
+            </Center>
+          )}
         </SimpleGrid>
       </Container>
     </ProfileLayout>
