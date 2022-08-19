@@ -1,5 +1,4 @@
 import * as fs from "fs";
-
 const Sitemap = () => {
   return null;
 };
@@ -12,16 +11,20 @@ export const getServerSideProps = async ({ res }) => {
     .filter((staticPage) => {
       return ![
         "api",
+        "product",
         "_app.js",
-        "_document.js",
+        "_document.tsx",
         "404.js",
-        "sitemap.xml.js",
+        "sitemap.xml.tsx",
       ].includes(staticPage);
     })
     .map((staticPagePath) => {
       return `${BASE_URL}/${staticPagePath}`;
     });
-  const allPaths = [...staticPaths];
+
+  const dynamicPaths = [`${BASE_URL}/product/1`, `${BASE_URL}/product/2`];
+
+  const allPaths = [...staticPaths, ...dynamicPaths];
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -38,7 +41,7 @@ export const getServerSideProps = async ({ res }) => {
         })
         .join("")}
     </urlset>
-`;
+  `;
 
   res.setHeader("Content-Type", "text/xml");
   res.write(sitemap);
