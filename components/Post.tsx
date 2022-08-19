@@ -39,9 +39,9 @@ export default function Post({
       <HStack justify={"space-between"} px={4} py={2}>
         <Link href={author?.id} passHref>
           <HStack as="a" spacing={4}>
-            <Avatar src={author?.avatar?.url} />
+            <Avatar name={author?.name} src={author?.avatar?.url} />
             <VStack spacing={0} align="start">
-              <Heading fontSize={"lg"}>{author.name}</Heading>
+              <Heading fontSize={"lg"}>{author?.name}</Heading>
               <Text fontSize={"sm"}>{new Date(created_at).toDateString()}</Text>
             </VStack>
           </HStack>
