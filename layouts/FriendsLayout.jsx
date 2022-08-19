@@ -22,13 +22,7 @@ import {
   RiUserReceived2Line,
 } from "react-icons/ri";
 
-
-export default function FriendsLayout({
-  children,
-  loading,
-  error,
-  title,
-}) {
+export default function FriendsLayout({ children, loading, error, title }) {
   const router = useRouter();
   return (
     <Container maxW={"container.xl"}>
@@ -66,7 +60,7 @@ export default function FriendsLayout({
           {loading && (
             <SimpleGrid columns={[1, 1, 2, 3]} spacing={4}>
               {[...new Array(3)].map((_, i) => (
-                <Box w="full">
+                <Box w="full" key={i}>
                   <Skeleton w={"full"} h={"xs"} key={i}></Skeleton>
                   <Skeleton mt={2} w="full" h={"16px"} />
                   <Skeleton mt={6} w="full" h={"32px"} />
