@@ -65,24 +65,27 @@ export default function CreatePostRoute() {
         </Heading>
 
         <Stack spacing={4} mt={8}>
-          <Textarea
-            rows={8}
-            placeholder={"Start typing post content..."}
-            value={content}
-            onChange={(e) => setContent(e.target.value)}
-          />
-          <HStack spacing={4}>
-            <UploadMedia
-              tooltip="Upload post media"
-              addMediaFile={(mediaData) => setMedia(mediaData)}
-              bucket="post"
-            >
-              <Icon fontSize={"xl"} as={FiImage} />
-            </UploadMedia>
-          </HStack>
+          <Box pos="relative">
+            <Textarea
+              rows={8}
+              placeholder={"Start typing post content..."}
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+            <Box zIndex={30} pos="absolute" bottom={3} right={3}>
+              <UploadMedia
+                tooltip="Upload post media"
+                addMediaFile={(mediaData) => setMedia(mediaData)}
+                bucket="post"
+              >
+                <Icon fontSize={"xl"} as={FiImage} />
+              </UploadMedia>
+            </Box>
+          </Box>
+
           <Button
             isLoading={inserting}
-            colorScheme="green"
+            colorScheme="purple"
             w="full"
             onClick={handleCreatePost}
           >

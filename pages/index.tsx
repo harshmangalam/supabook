@@ -20,7 +20,10 @@ export default function Home({ posts }) {
 }
 
 export async function getServerSideProps() {
-  const { data } = await supabase.from("post").select(`*,author(*)`);
+  const { data } = await supabase
+    .from("post")
+    .select(`*,author(*)`)
+    .order("created_at", { ascending: false });
   return {
     props: {
       posts: data,
