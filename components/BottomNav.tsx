@@ -2,12 +2,8 @@ import { HStack, Icon, IconButton, useColorModeValue } from "@chakra-ui/react";
 import Link from "next/link";
 import { AiOutlineHome } from "react-icons/ai";
 import { BsPeople } from "react-icons/bs";
-import { useAuthContext } from "../context/auth";
 
 export default function BottomNav() {
-  const authContext = useAuthContext();
-
-  if (!authContext?.user) return null;
   return (
     <HStack
       as="nav"
@@ -23,7 +19,7 @@ export default function BottomNav() {
       borderTopWidth="2px"
     >
       {tabs.map((tab) => (
-        <Link href={tab.href} passHref>
+        <Link key={tab.name} href={tab.href} passHref>
           <IconButton
             variant={"ghost"}
             icon={<Icon fontSize={"24px"} as={tab.icon} />}

@@ -16,9 +16,10 @@ export default function ProfileMenu() {
   const authContext = useAuthContext();
   return (
     <Menu>
-      <MenuButton>
+      <MenuButton aria-label="Profile Manu">
         <Avatar size={"sm"} src={authContext?.user?.avatar?.url} />
       </MenuButton>
+
       <MenuList>
         <Link href={`/${authContext?.user.id}`} passHref>
           <MenuItem as="a">

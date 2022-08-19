@@ -59,7 +59,7 @@ export default function Navbar() {
           justify="center"
         >
           {menus.map((menu) => (
-            <Link href={menu.href} passHref>
+            <Link key={menu.name} href={menu.href} passHref>
               <Button
                 size={["sm", "sm", "md"]}
                 variant={"ghost"}
