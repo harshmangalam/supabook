@@ -7,9 +7,7 @@ import {
   PopoverFooter,
   PopoverArrow,
   PopoverCloseButton,
-  PopoverAnchor,
   IconButton,
-  Tooltip,
   Button,
   Icon,
 } from "@chakra-ui/react";
@@ -29,9 +27,11 @@ export default function NotificationMenu() {
         <PopoverArrow />
         <PopoverCloseButton />
         <PopoverHeader>Notifications</PopoverHeader>
-        <PopoverBody>Are you sure you want to have that milkshake?</PopoverBody>
+        <PopoverBody>
+          Notifications will available soon using supabase relatime
+        </PopoverBody>
         <PopoverFooter>
-          <Link href={"/notifications"} passHref>
+          <Link href={"/"} passHref>
             <Button w="full" variant={"link"}>
               See all
             </Button>
