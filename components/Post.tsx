@@ -5,7 +5,6 @@ import {
   Heading,
   HStack,
   IconButton,
-  Image,
   Text,
   useColorModeValue,
   VStack,
@@ -15,7 +14,7 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { VscComment } from "react-icons/vsc";
 import { useAuthContext } from "../context/auth";
 import PostAction from "./Post/PostAction";
-
+import Image from "next/image";
 interface Props {
   id: string;
   created_at: string;
@@ -58,9 +57,10 @@ export default function Post({
         <Image
           alt={author?.name}
           src={media.url}
-          w="full"
-          h={"400px"}
+          width="300px"
+          height={"400px"}
           loading="lazy"
+          layout="responsive"
         />
       )}
       {/* <HStack justify={"space-between"}>
