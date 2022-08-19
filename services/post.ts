@@ -5,8 +5,6 @@ export async function fetchUserPosts(profileId: string) {
     .from("post")
     .select(`*,author(id,name,avatar)`)
     .eq("author", profileId);
-
-  console.log(data);
   if (error) throw error;
   if (data) return data;
 }

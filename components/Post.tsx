@@ -65,11 +65,8 @@ export default function Post({
       <Divider /> */}
       {content && (
         <>
-          <Link href={id} passHref>
-            <Box as="a">
-              <Text p={4}>{content}</Text>
-            </Box>
-          </Link>
+          <Text p={4}>{content}</Text>
+
           <Divider />
         </>
       )}
