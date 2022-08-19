@@ -11,7 +11,6 @@ export const getServerSideProps = async ({ res }) => {
     .filter((staticPage) => {
       return ![
         "api",
-        "product",
         "_app.js",
         "_document.tsx",
         "404.js",
