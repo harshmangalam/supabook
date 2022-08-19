@@ -2,10 +2,14 @@ import {
   Avatar,
   Box,
   Button,
+  Center,
   Container,
   Heading,
   HStack,
   Icon,
+  Skeleton,
+  SkeletonCircle,
+  Spinner,
   Stack,
   Tag,
   Text,
@@ -38,6 +42,8 @@ export default function ProfileLayout({ children, loading, error }: Props) {
     fetchProfileDetails(router.query.profileId as string)
   );
 
+  const profileLoading = !profile && !profileError;
+
   const handleUpdateProfilePic = async (avatar: any) => {
     try {
       const data = await changeProfilePic(
@@ -51,13 +57,6 @@ export default function ProfileLayout({ children, loading, error }: Props) {
     }
   };
 
-  if (profileError) {
-    return <pre>{JSON.stringify(profileError, null, 4)}</pre>;
-  }
-
-  if (!profileError && !profile) {
-    return <p>Loading...</p>;
-  }
   return (
     <Container maxW={"container.md"}>
       {/* profile info section  */}
@@ -69,40 +68,102 @@ export default function ProfileLayout({ children, loading, error }: Props) {
       >
         {/* avatar section  */}
         <Box pos="relative">
-          <Avatar src={profile?.avatar?.url} w={"200px"} h={"200px"} />
+          {profileLoading ? (
+            <SkeletonCircle
+              startColor="purple.400"
+              endColor="green.400"
+              size={"200px"}
+            />
+          ) : (
+            <Avatar src={profile?.avatar?.url} w={"200px"} h={"200px"} />
+          )}
           {authContext?.user?.id === profile?.id && (
             <Box pos={"absolute"} right={0} bottom={4}>
-              <UploadMedia
-                bucket="avatar"
-                tooltip="Change profile pic"
-                addMediaFile={(avatar) => handleUpdateProfilePic(avatar)}
-              >
-                <Icon as={FaCamera} fontSize="lg" />
-              </UploadMedia>
+              {profileLoading ? (
+                <SkeletonCircle
+                  size="40px"
+                  startColor="green.500"
+                  endColor="pink.500"
+                />
+              ) : (
+                <UploadMedia
+                  bucket="avatar"
+                  tooltip="Change profile pic"
+                  addMediaFile={(avatar) => handleUpdateProfilePic(avatar)}
+                >
+                  <Icon as={FaCamera} fontSize="lg" />
+                </UploadMedia>
+              )}
             </Box>
           )}
         </Box>
         {/* content section  */}
         <VStack align={["center", "center", "start"]} spacing={2}>
-          <Heading>{profile.name}</Heading>
-          <Text fontSize={"xl"}>{profile.user_info?.email}</Text>
-          <Text fontSize={"lg"}>
-            Joined {new Date(profile.created_at).toDateString()}
-          </Text>
+          {profileLoading ? (
+            <Skeleton
+              startColor="pink.400"
+              endColor="blue.400"
+              width={"xs"}
+              height={"20px"}
+            />
+          ) : (
+            <Heading>{profile.name}</Heading>
+          )}
+          {profileLoading ? (
+            <Skeleton
+              startColor="orange.400"
+              endColor="yellow.400"
+              width="xs"
+              height={"16px"}
+            />
+          ) : (
+            <Text fontSize={"xl"}>{profile.user_info?.email}</Text>
+          )}
+          {profileLoading ? (
+            <Skeleton
+              startColor="blue.400"
+              endColor="red.400"
+              width="xs"
+              height={"16px"}
+            />
+          ) : (
+            <Text fontSize={"lg"}>
+              Joined {new Date(profile.created_at).toDateString()}
+            </Text>
+          )}
 
-          <HStack>
-            <Tag>23 Friends</Tag>
-            <Tag>18 Posts</Tag>
-          </HStack>
+          {profileLoading ? (
+            <HStack>
+              <Skeleton startColor="green.400" width={"80px"} height="32px" />
+              <Skeleton endColor="purple.400" width={"80px"} height="32px" />
+            </HStack>
+          ) : (
+            <HStack>
+              <Tag>23 Friends</Tag>
+              <Tag>18 Posts</Tag>
+            </HStack>
+          )}
           {authContext?.user?.id === profile?.id && (
-            <Button
-              leftIcon={<RiUserSettingsLine size={18} />}
-              size="sm"
-              rounded="full"
-              colorScheme="green"
-            >
-              Edit Profile
-            </Button>
+            <>
+              {profileLoading ? (
+                <Skeleton
+                  startColor="blue.400"
+                  endColor="yellow.400"
+                  width="120px"
+                  height={"32px"}
+                  rounded="full"
+                />
+              ) : (
+                <Button
+                  leftIcon={<RiUserSettingsLine size={18} />}
+                  size="sm"
+                  rounded="full"
+                  colorScheme="green"
+                >
+                  Edit Profile
+                </Button>
+              )}
+            </>
           )}
         </VStack>
       </Stack>
@@ -128,8 +189,16 @@ export default function ProfileLayout({ children, loading, error }: Props) {
         </HStack>
 
         {/* dynamic page on tab change  */}
-        {loading && <p>Loading...</p>}
-        {error && <p>Error...</p>}
+        {loading && (
+          <Center>
+            <Spinner size={"xl"} />
+          </Center>
+        )}
+        {error && (
+          <Center>
+            <p>Error...</p>
+          </Center>
+        )}
         {!loading && !error && <Box>{children}</Box>}
       </Stack>
     </Container>
