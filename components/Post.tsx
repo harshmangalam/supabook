@@ -54,7 +54,15 @@ export default function Post({
       </HStack>
       <Divider />
 
-      {media && <Image src={media.url} w="full" h={"400px"} loading="lazy" />}
+      {media && (
+        <Image
+          alt={author?.name}
+          src={media.url}
+          w="full"
+          h={"400px"}
+          loading="lazy"
+        />
+      )}
       {/* <HStack justify={"space-between"}>
         <HStack px={4} py={2}>
           <AiOutlineHeart size={16} />

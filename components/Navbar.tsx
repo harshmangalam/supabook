@@ -41,6 +41,7 @@ export default function Navbar() {
       <Link href={"/"} passHref>
         <Box as="a" w={"40px"} h={"40px"}>
           <Image
+            alt={"Logo"}
             w="full"
             h="full"
             background="transparent"
