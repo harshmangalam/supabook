@@ -61,7 +61,9 @@ export default function Post({ id, created_at, content, media, author }) {
       <Divider /> */}
       {content && (
         <>
-          <Text p={4}>{content}</Text>
+          <Text fontSize={"sm"} p={4}>
+            {content}
+          </Text>
 
           <Divider />
         </>
