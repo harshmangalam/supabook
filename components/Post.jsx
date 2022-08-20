@@ -41,16 +41,19 @@ export default function Post({ id, created_at, content, media, author }) {
       </HStack>
       <Divider />
 
-      {media && (
-        <Image
-          alt={author?.name}
-          src={media.url}
-          loading="lazy"
-          width={600}
-          height={600}
-          layout="responsive"
-        />
-      )}
+      <Box>
+        {media && (
+          <Image
+            alt={author?.name}
+            src={media.url}
+            loading="lazy"
+            layout="responsive"
+            objectFit="cover"
+            width={500}
+            height={600}
+          />
+        )}
+      </Box>
       {/* <HStack justify={"space-between"}>
         <HStack px={4} py={2}>
           <AiOutlineHeart size={16} />
