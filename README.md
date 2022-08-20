@@ -1,6 +1,6 @@
-# Nextjs Supabase Social Media Web App
+# Supabook - Nextjs Supabase Social Media Web App
 
-[Deployed on vercel](https://supabase-hack.vercel.app/)
+[Deployed on vercel](https://supabook-dev.vercel.app/)
 
 ## Tech Stack
 
