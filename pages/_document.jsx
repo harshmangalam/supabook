@@ -11,6 +11,7 @@ export default class Document extends NextDocument {
             name="description"
             content="Social media web app build with Supabase and Nextjs"
           />
+          <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
         </Head>
         <body>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />
