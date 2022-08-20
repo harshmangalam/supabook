@@ -1,5 +1,7 @@
 # Nextjs Supabase Social Media Web App
 
+[Deployed on vercel](https://supabase-hack.vercel.app/)
+
 ## Tech Stack
 
 - Nextjs
@@ -74,3 +76,28 @@
 - [ ] Show all users around coordinate
 - [ ] show all friends around there on map coordinates
 - [ ] show posts on map coordinate
+
+## Supabase
+
+In this project i have used supabase for
+
+- Database
+- Storage
+- Authentication
+
+When someone create their account it internally use supabase authentication and also create new row in profile table that extend the user details like profile pic, name , etc...
+
+When authenticated user create new post the data go into supabase post table and if it contain image then first it store to supabase storage and then their path and signed url get stored in post table.
+
+Any authenticated user can visit their profile and change their profile avatar that get stored in supabase storage in avatar folder.
+
+## Supabase Authentication
+
+- Signup using email and password also provide name to be displayed in post and profile
+
+- Login using email and password
+- Login using magic link. Magic link will sent to email address and get authenticated when user click on that link
+
+- Upcomming Oauth authentication using google,github,linkedin , etc...
+
+- Supabase authentication is easy to use and utilize.
