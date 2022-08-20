@@ -46,8 +46,8 @@ export default function Post({ id, created_at, content, media, author }) {
           alt={author?.name}
           src={media.url}
           loading="lazy"
-          width={500}
-          height={400}
+          width={600}
+          height={600}
           layout="responsive"
         />
       )}
